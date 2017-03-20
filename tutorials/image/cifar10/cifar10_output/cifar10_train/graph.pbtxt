@@ -5427,6 +5427,177 @@ node {
   }
 }
 node {
+  name: "conv1/conv1/gamma/Initializer/Const"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma/Assign"
+  op: "Assign"
+  input: "conv1/conv1/gamma"
+  input: "conv1/conv1/gamma/Initializer/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma/read"
+  op: "Identity"
+  input: "conv1/conv1/gamma"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "conv1/conv1/moving_mean/Initializer/Const"
   op: "Const"
   attr {
@@ -5809,6 +5980,81 @@ node {
   op: "Reshape"
   input: "conv1/conv1/beta/read"
   input: "conv1/conv1/Reshape/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/Reshape_1/shape"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 4
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\001\000\000\000\001\000\000\000\001\000\000\000@\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/Reshape_1"
+  op: "Reshape"
+  input: "conv1/conv1/gamma/read"
+  input: "conv1/conv1/Reshape_1/shape"
   attr {
     key: "T"
     value {
@@ -6476,72 +6722,6 @@ node {
   }
 }
 node {
-  name: "conv1/conv1/Reshape_1/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: -1
-      }
-    }
-  }
-}
-node {
-  name: "conv1/conv1/Reshape_1"
-  op: "Reshape"
-  input: "conv1/conv1/moments/normalize/mean"
-  input: "conv1/conv1/Reshape_1/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 64
-          }
-        }
-      }
-    }
-  }
-}
-node {
   name: "conv1/conv1/Reshape_2/shape"
   op: "Const"
   attr {
@@ -6580,8 +6760,74 @@ node {
 node {
   name: "conv1/conv1/Reshape_2"
   op: "Reshape"
-  input: "conv1/conv1/moments/normalize/variance"
+  input: "conv1/conv1/moments/normalize/mean"
   input: "conv1/conv1/Reshape_2/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/Reshape_3/shape"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        int_val: -1
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/Reshape_3"
+  op: "Reshape"
+  input: "conv1/conv1/moments/normalize/variance"
+  input: "conv1/conv1/Reshape_3/shape"
   attr {
     key: "T"
     value {
@@ -6640,7 +6886,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.0010000000474974513
+        float_val: 0.10000000149011612
       }
     }
   }
@@ -6649,7 +6895,7 @@ node {
   name: "conv1/conv1/AssignMovingAvg/sub"
   op: "Sub"
   input: "conv1/conv1/moving_mean/read"
-  input: "conv1/conv1/Reshape_1"
+  input: "conv1/conv1/Reshape_2"
   attr {
     key: "T"
     value {
@@ -6780,7 +7026,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.0010000000474974513
+        float_val: 0.10000000149011612
       }
     }
   }
@@ -6789,7 +7035,7 @@ node {
   name: "conv1/conv1/AssignMovingAvg_1/sub"
   op: "Sub"
   input: "conv1/conv1/moving_variance/read"
-  input: "conv1/conv1/Reshape_2"
+  input: "conv1/conv1/Reshape_3"
   attr {
     key: "T"
     value {
@@ -6985,8 +7231,41 @@ node {
 node {
   name: "conv1/conv1/batchnorm/mul"
   op: "Mul"
-  input: "conv1/Conv2D"
   input: "conv1/conv1/batchnorm/Rsqrt"
+  input: "conv1/conv1/Reshape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/batchnorm/mul_1"
+  op: "Mul"
+  input: "conv1/Conv2D"
+  input: "conv1/conv1/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -7016,10 +7295,10 @@ node {
   }
 }
 node {
-  name: "conv1/conv1/batchnorm/mul_1"
+  name: "conv1/conv1/batchnorm/mul_2"
   op: "Mul"
   input: "conv1/conv1/moments/normalize/mean"
-  input: "conv1/conv1/batchnorm/Rsqrt"
+  input: "conv1/conv1/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -7052,7 +7331,7 @@ node {
   name: "conv1/conv1/batchnorm/sub"
   op: "Sub"
   input: "conv1/conv1/Reshape"
-  input: "conv1/conv1/batchnorm/mul_1"
+  input: "conv1/conv1/batchnorm/mul_2"
   attr {
     key: "T"
     value {
@@ -7084,7 +7363,7 @@ node {
 node {
   name: "conv1/conv1/batchnorm/add_1"
   op: "Add"
-  input: "conv1/conv1/batchnorm/mul"
+  input: "conv1/conv1/batchnorm/mul_1"
   input: "conv1/conv1/batchnorm/sub"
   attr {
     key: "T"
@@ -8445,6 +8724,177 @@ node {
   }
 }
 node {
+  name: "conv2/conv2/gamma/Initializer/Const"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma/Assign"
+  op: "Assign"
+  input: "conv2/conv2/gamma"
+  input: "conv2/conv2/gamma/Initializer/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma/read"
+  op: "Identity"
+  input: "conv2/conv2/gamma"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "conv2/conv2/moving_mean/Initializer/Const"
   op: "Const"
   attr {
@@ -8827,6 +9277,81 @@ node {
   op: "Reshape"
   input: "conv2/conv2/beta/read"
   input: "conv2/conv2/Reshape/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/Reshape_1/shape"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 4
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\001\000\000\000\001\000\000\000\001\000\000\000@\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/Reshape_1"
+  op: "Reshape"
+  input: "conv2/conv2/gamma/read"
+  input: "conv2/conv2/Reshape_1/shape"
   attr {
     key: "T"
     value {
@@ -9494,72 +10019,6 @@ node {
   }
 }
 node {
-  name: "conv2/conv2/Reshape_1/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        int_val: -1
-      }
-    }
-  }
-}
-node {
-  name: "conv2/conv2/Reshape_1"
-  op: "Reshape"
-  input: "conv2/conv2/moments/normalize/mean"
-  input: "conv2/conv2/Reshape_1/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 64
-          }
-        }
-      }
-    }
-  }
-}
-node {
   name: "conv2/conv2/Reshape_2/shape"
   op: "Const"
   attr {
@@ -9598,8 +10057,74 @@ node {
 node {
   name: "conv2/conv2/Reshape_2"
   op: "Reshape"
-  input: "conv2/conv2/moments/normalize/variance"
+  input: "conv2/conv2/moments/normalize/mean"
   input: "conv2/conv2/Reshape_2/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/Reshape_3/shape"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        int_val: -1
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/Reshape_3"
+  op: "Reshape"
+  input: "conv2/conv2/moments/normalize/variance"
+  input: "conv2/conv2/Reshape_3/shape"
   attr {
     key: "T"
     value {
@@ -9658,7 +10183,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.0010000000474974513
+        float_val: 0.10000000149011612
       }
     }
   }
@@ -9667,7 +10192,7 @@ node {
   name: "conv2/conv2/AssignMovingAvg/sub"
   op: "Sub"
   input: "conv2/conv2/moving_mean/read"
-  input: "conv2/conv2/Reshape_1"
+  input: "conv2/conv2/Reshape_2"
   attr {
     key: "T"
     value {
@@ -9798,7 +10323,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.0010000000474974513
+        float_val: 0.10000000149011612
       }
     }
   }
@@ -9807,7 +10332,7 @@ node {
   name: "conv2/conv2/AssignMovingAvg_1/sub"
   op: "Sub"
   input: "conv2/conv2/moving_variance/read"
-  input: "conv2/conv2/Reshape_2"
+  input: "conv2/conv2/Reshape_3"
   attr {
     key: "T"
     value {
@@ -10003,8 +10528,41 @@ node {
 node {
   name: "conv2/conv2/batchnorm/mul"
   op: "Mul"
-  input: "conv2/Conv2D"
   input: "conv2/conv2/batchnorm/Rsqrt"
+  input: "conv2/conv2/Reshape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/batchnorm/mul_1"
+  op: "Mul"
+  input: "conv2/Conv2D"
+  input: "conv2/conv2/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -10034,10 +10592,10 @@ node {
   }
 }
 node {
-  name: "conv2/conv2/batchnorm/mul_1"
+  name: "conv2/conv2/batchnorm/mul_2"
   op: "Mul"
   input: "conv2/conv2/moments/normalize/mean"
-  input: "conv2/conv2/batchnorm/Rsqrt"
+  input: "conv2/conv2/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -10070,7 +10628,7 @@ node {
   name: "conv2/conv2/batchnorm/sub"
   op: "Sub"
   input: "conv2/conv2/Reshape"
-  input: "conv2/conv2/batchnorm/mul_1"
+  input: "conv2/conv2/batchnorm/mul_2"
   attr {
     key: "T"
     value {
@@ -10102,7 +10660,7 @@ node {
 node {
   name: "conv2/conv2/batchnorm/add_1"
   op: "Add"
-  input: "conv2/conv2/batchnorm/mul"
+  input: "conv2/conv2/batchnorm/mul_1"
   input: "conv2/conv2/batchnorm/sub"
   attr {
     key: "T"
@@ -21653,7 +22211,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/Shape"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape"
   op: "Const"
   input: "^avg"
   attr {
@@ -21690,7 +22248,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/Shape_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape_1"
   op: "Const"
   input: "^avg"
   attr {
@@ -21727,10 +22285,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/BroadcastGradientArgs"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/BroadcastGradientArgs"
   op: "BroadcastGradientArgs"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -21756,10 +22314,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/mul"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul"
   op: "Mul"
   input: "gradients/conv2/conv2/batchnorm/add_1_grad/tuple/control_dependency"
-  input: "conv2/conv2/batchnorm/Rsqrt"
+  input: "conv2/conv2/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -21789,10 +22347,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/Sum"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum"
   op: "Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/mul"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/BroadcastGradientArgs"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/BroadcastGradientArgs"
   attr {
     key: "T"
     value {
@@ -21823,10 +22381,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
   op: "Reshape"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape"
   attr {
     key: "T"
     value {
@@ -21862,7 +22420,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/mul_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul_1"
   op: "Mul"
   input: "conv2/Conv2D"
   input: "gradients/conv2/conv2/batchnorm/add_1_grad/tuple/control_dependency"
@@ -21895,10 +22453,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/Sum_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum_1"
   op: "Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/mul_1"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/BroadcastGradientArgs:1"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
     value {
@@ -21929,10 +22487,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
   op: "Reshape"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Sum_1"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -21968,17 +22526,17 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/group_deps"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/group_deps"
   op: "NoOp"
   input: "^avg"
-  input: "^gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
-  input: "^gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
+  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency"
   op: "Identity"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
-  input: "^gradients/conv2/conv2/batchnorm/mul_grad/tuple/group_deps"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
+  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -21989,7 +22547,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
       }
     }
   }
@@ -22016,10 +22574,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency_1"
   op: "Identity"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
-  input: "^gradients/conv2/conv2/batchnorm/mul_grad/tuple/group_deps"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
+  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -22030,7 +22588,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
       }
     }
   }
@@ -22483,7 +23041,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/Shape"
   op: "Const"
   input: "^avg"
   attr {
@@ -22520,7 +23078,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/Shape_1"
   op: "Const"
   input: "^avg"
   attr {
@@ -22557,10 +23115,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/BroadcastGradientArgs"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/BroadcastGradientArgs"
   op: "BroadcastGradientArgs"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Shape"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -22586,10 +23144,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/mul"
   op: "Mul"
   input: "gradients/conv2/conv2/batchnorm/sub_grad/tuple/control_dependency_1"
-  input: "conv2/conv2/batchnorm/Rsqrt"
+  input: "conv2/conv2/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -22619,10 +23177,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/Sum"
   op: "Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/BroadcastGradientArgs"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/mul"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/BroadcastGradientArgs"
   attr {
     key: "T"
     value {
@@ -22653,10 +23211,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape"
   op: "Reshape"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Sum"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Shape"
   attr {
     key: "T"
     value {
@@ -22692,7 +23250,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/mul_1"
   op: "Mul"
   input: "conv2/conv2/moments/normalize/mean"
   input: "gradients/conv2/conv2/batchnorm/sub_grad/tuple/control_dependency_1"
@@ -22725,10 +23283,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/Sum_1"
   op: "Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/mul_1"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/BroadcastGradientArgs:1"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/mul_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
     value {
@@ -22759,10 +23317,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape_1"
   op: "Reshape"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Sum_1"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Shape_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Sum_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -22798,17 +23356,17 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/group_deps"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/group_deps"
   op: "NoOp"
   input: "^avg"
-  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
-  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
+  input: "^gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape"
+  input: "^gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape_1"
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/control_dependency"
   op: "Identity"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
-  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/group_deps"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape"
+  input: "^gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -22819,7 +23377,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape"
       }
     }
   }
@@ -22846,10 +23404,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency_1"
+  name: "gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/control_dependency_1"
   op: "Identity"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
-  input: "^gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/group_deps"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape_1"
+  input: "^gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -22860,7 +23418,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_2_grad/Reshape_1"
       }
     }
   }
@@ -22992,7 +23550,7 @@ node {
 node {
   name: "gradients/conv2/conv2/moments/normalize/mean_grad/Sum"
   op: "Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/control_dependency"
   input: "gradients/conv2/conv2/moments/normalize/mean_grad/BroadcastGradientArgs"
   attr {
     key: "T"
@@ -23065,7 +23623,7 @@ node {
 node {
   name: "gradients/conv2/conv2/moments/normalize/mean_grad/Sum_1"
   op: "Sum"
-  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/control_dependency"
   input: "gradients/conv2/conv2/moments/normalize/mean_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
@@ -23227,8 +23785,8 @@ node {
 node {
   name: "gradients/AddN_3"
   op: "AddN"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency_1"
   input: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_2_grad/tuple/control_dependency_1"
   attr {
     key: "N"
     value {
@@ -23245,7 +23803,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape_1"
       }
     }
   }
@@ -23272,14 +23830,385 @@ node {
   }
 }
 node {
-  name: "gradients/conv2/conv2/batchnorm/Rsqrt_grad/RsqrtGrad"
-  op: "RsqrtGrad"
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/Shape"
+  op: "Const"
+  input: "^avg"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 4
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\001\000\000\000\001\000\000\000\001\000\000\000@\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/Shape_1"
+  op: "Const"
+  input: "^avg"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 4
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\001\000\000\000\001\000\000\000\001\000\000\000@\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/mul"
+  op: "Mul"
+  input: "gradients/AddN_3"
+  input: "conv2/conv2/Reshape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/Sum"
+  op: "Sum"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/mul"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Sum"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/mul_1"
+  op: "Mul"
   input: "conv2/conv2/batchnorm/Rsqrt"
   input: "gradients/AddN_3"
   attr {
     key: "T"
     value {
       type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/mul_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Sum_1"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^avg"
+  input: "^gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
+  input: "^gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
+  input: "^gradients/conv2/conv2/batchnorm/mul_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+  input: "^gradients/conv2/conv2/batchnorm/mul_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_grad/Reshape_1"
+      }
     }
   }
   attr {
@@ -23372,6 +24301,106 @@ node {
           dim {
             size: 1
           }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/batchnorm/Rsqrt_grad/RsqrtGrad"
+  op: "RsqrtGrad"
+  input: "conv2/conv2/batchnorm/Rsqrt"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/Reshape_1_grad/Shape"
+  op: "Const"
+  input: "^avg"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        int_val: 64
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv2/conv2/Reshape_1_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency_1"
+  input: "gradients/conv2/conv2/Reshape_1_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
           dim {
             size: 64
           }
@@ -26808,7 +27837,7 @@ node {
 node {
   name: "gradients/AddN_6"
   op: "AddN"
-  input: "gradients/conv2/conv2/batchnorm/mul_grad/tuple/control_dependency"
+  input: "gradients/conv2/conv2/batchnorm/mul_1_grad/tuple/control_dependency"
   input: "gradients/conv2/conv2/moments/sufficient_statistics/SquaredDifference_grad/tuple/control_dependency"
   input: "gradients/conv2/conv2/moments/sufficient_statistics/Sub_grad/tuple/control_dependency"
   attr {
@@ -26827,7 +27856,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv2/conv2/batchnorm/mul_grad/Reshape"
+        s: "loc:@gradients/conv2/conv2/batchnorm/mul_1_grad/Reshape"
       }
     }
   }
@@ -27687,7 +28716,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/Shape"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape"
   op: "Const"
   input: "^avg"
   attr {
@@ -27724,7 +28753,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/Shape_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape_1"
   op: "Const"
   input: "^avg"
   attr {
@@ -27761,10 +28790,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/BroadcastGradientArgs"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/BroadcastGradientArgs"
   op: "BroadcastGradientArgs"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -27790,10 +28819,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/mul"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul"
   op: "Mul"
   input: "gradients/conv1/conv1/batchnorm/add_1_grad/tuple/control_dependency"
-  input: "conv1/conv1/batchnorm/Rsqrt"
+  input: "conv1/conv1/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -27823,10 +28852,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/Sum"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum"
   op: "Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/mul"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/BroadcastGradientArgs"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/BroadcastGradientArgs"
   attr {
     key: "T"
     value {
@@ -27857,10 +28886,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
   op: "Reshape"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape"
   attr {
     key: "T"
     value {
@@ -27896,7 +28925,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/mul_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul_1"
   op: "Mul"
   input: "conv1/Conv2D"
   input: "gradients/conv1/conv1/batchnorm/add_1_grad/tuple/control_dependency"
@@ -27929,10 +28958,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/Sum_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum_1"
   op: "Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/mul_1"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/BroadcastGradientArgs:1"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
     value {
@@ -27963,10 +28992,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
   op: "Reshape"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Sum_1"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -28002,17 +29031,17 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/group_deps"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/group_deps"
   op: "NoOp"
   input: "^avg"
-  input: "^gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
-  input: "^gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
+  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency"
   op: "Identity"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
-  input: "^gradients/conv1/conv1/batchnorm/mul_grad/tuple/group_deps"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
+  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -28023,7 +29052,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
       }
     }
   }
@@ -28050,10 +29079,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency_1"
   op: "Identity"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
-  input: "^gradients/conv1/conv1/batchnorm/mul_grad/tuple/group_deps"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
+  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -28064,7 +29093,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
       }
     }
   }
@@ -28517,7 +29546,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/Shape"
   op: "Const"
   input: "^avg"
   attr {
@@ -28554,7 +29583,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/Shape_1"
   op: "Const"
   input: "^avg"
   attr {
@@ -28591,10 +29620,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/BroadcastGradientArgs"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/BroadcastGradientArgs"
   op: "BroadcastGradientArgs"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Shape"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -28620,10 +29649,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/mul"
   op: "Mul"
   input: "gradients/conv1/conv1/batchnorm/sub_grad/tuple/control_dependency_1"
-  input: "conv1/conv1/batchnorm/Rsqrt"
+  input: "conv1/conv1/batchnorm/mul"
   attr {
     key: "T"
     value {
@@ -28653,10 +29682,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/Sum"
   op: "Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/BroadcastGradientArgs"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/mul"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/BroadcastGradientArgs"
   attr {
     key: "T"
     value {
@@ -28687,10 +29716,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape"
   op: "Reshape"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Sum"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Shape"
   attr {
     key: "T"
     value {
@@ -28726,7 +29755,7 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/mul_1"
   op: "Mul"
   input: "conv1/conv1/moments/normalize/mean"
   input: "gradients/conv1/conv1/batchnorm/sub_grad/tuple/control_dependency_1"
@@ -28759,10 +29788,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/Sum_1"
   op: "Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/mul_1"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/BroadcastGradientArgs:1"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/mul_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
     value {
@@ -28793,10 +29822,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape_1"
   op: "Reshape"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Sum_1"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Shape_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Sum_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Shape_1"
   attr {
     key: "T"
     value {
@@ -28832,17 +29861,17 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/group_deps"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/group_deps"
   op: "NoOp"
   input: "^avg"
-  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
-  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
+  input: "^gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape"
+  input: "^gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape_1"
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/control_dependency"
   op: "Identity"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
-  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/group_deps"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape"
+  input: "^gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -28853,7 +29882,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape"
       }
     }
   }
@@ -28880,10 +29909,10 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency_1"
+  name: "gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/control_dependency_1"
   op: "Identity"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
-  input: "^gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/group_deps"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape_1"
+  input: "^gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/group_deps"
   attr {
     key: "T"
     value {
@@ -28894,7 +29923,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_2_grad/Reshape_1"
       }
     }
   }
@@ -29026,7 +30055,7 @@ node {
 node {
   name: "gradients/conv1/conv1/moments/normalize/mean_grad/Sum"
   op: "Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/control_dependency"
   input: "gradients/conv1/conv1/moments/normalize/mean_grad/BroadcastGradientArgs"
   attr {
     key: "T"
@@ -29099,7 +30128,7 @@ node {
 node {
   name: "gradients/conv1/conv1/moments/normalize/mean_grad/Sum_1"
   op: "Sum"
-  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/control_dependency"
   input: "gradients/conv1/conv1/moments/normalize/mean_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
@@ -29261,8 +30290,8 @@ node {
 node {
   name: "gradients/AddN_8"
   op: "AddN"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency_1"
   input: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_2_grad/tuple/control_dependency_1"
   attr {
     key: "N"
     value {
@@ -29279,7 +30308,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape_1"
       }
     }
   }
@@ -29306,14 +30335,385 @@ node {
   }
 }
 node {
-  name: "gradients/conv1/conv1/batchnorm/Rsqrt_grad/RsqrtGrad"
-  op: "RsqrtGrad"
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/Shape"
+  op: "Const"
+  input: "^avg"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 4
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\001\000\000\000\001\000\000\000\001\000\000\000@\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/Shape_1"
+  op: "Const"
+  input: "^avg"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 4
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\001\000\000\000\001\000\000\000\001\000\000\000@\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/mul"
+  op: "Mul"
+  input: "gradients/AddN_8"
+  input: "conv1/conv1/Reshape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/Sum"
+  op: "Sum"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/mul"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Sum"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/mul_1"
+  op: "Mul"
   input: "conv1/conv1/batchnorm/Rsqrt"
   input: "gradients/AddN_8"
   attr {
     key: "T"
     value {
       type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/mul_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Sum_1"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^avg"
+  input: "^gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
+  input: "^gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
+  input: "^gradients/conv1/conv1/batchnorm/mul_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+  input: "^gradients/conv1/conv1/batchnorm/mul_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_grad/Reshape_1"
+      }
     }
   }
   attr {
@@ -29406,6 +30806,106 @@ node {
           dim {
             size: 1
           }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/batchnorm/Rsqrt_grad/RsqrtGrad"
+  op: "RsqrtGrad"
+  input: "conv1/conv1/batchnorm/Rsqrt"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/Reshape_1_grad/Shape"
+  op: "Const"
+  input: "^avg"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        int_val: 64
+      }
+    }
+  }
+}
+node {
+  name: "gradients/conv1/conv1/Reshape_1_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency_1"
+  input: "gradients/conv1/conv1/Reshape_1_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
           dim {
             size: 64
           }
@@ -32842,7 +34342,7 @@ node {
 node {
   name: "gradients/AddN_11"
   op: "AddN"
-  input: "gradients/conv1/conv1/batchnorm/mul_grad/tuple/control_dependency"
+  input: "gradients/conv1/conv1/batchnorm/mul_1_grad/tuple/control_dependency"
   input: "gradients/conv1/conv1/moments/sufficient_statistics/SquaredDifference_grad/tuple/control_dependency"
   input: "gradients/conv1/conv1/moments/sufficient_statistics/Sub_grad/tuple/control_dependency"
   attr {
@@ -32861,7 +34361,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@gradients/conv1/conv1/batchnorm/mul_grad/Reshape"
+        s: "loc:@gradients/conv1/conv1/batchnorm/mul_1_grad/Reshape"
       }
     }
   }
@@ -33312,6 +34812,45 @@ node {
   }
 }
 node {
+  name: "GradientDescent/update_conv1/conv1/gamma/ApplyGradientDescent"
+  op: "ApplyGradientDescent"
+  input: "conv1/conv1/gamma"
+  input: "ExponentialDecay"
+  input: "gradients/conv1/conv1/Reshape_1_grad/Reshape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
   name: "GradientDescent/update_conv2/weights/ApplyGradientDescent"
   op: "ApplyGradientDescent"
   input: "conv2/weights"
@@ -33377,6 +34916,45 @@ node {
     value {
       list {
         s: "loc:@conv2/conv2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "GradientDescent/update_conv2/conv2/gamma/ApplyGradientDescent"
+  op: "ApplyGradientDescent"
+  input: "conv2/conv2/gamma"
+  input: "ExponentialDecay"
+  input: "gradients/conv2/conv2/Reshape_1_grad/Reshape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -33652,7 +35230,9 @@ node {
   name: "GradientDescent/update/NoOp"
   op: "NoOp"
   input: "^GradientDescent/update_conv1/conv1/beta/ApplyGradientDescent"
+  input: "^GradientDescent/update_conv1/conv1/gamma/ApplyGradientDescent"
   input: "^GradientDescent/update_conv2/conv2/beta/ApplyGradientDescent"
+  input: "^GradientDescent/update_conv2/conv2/gamma/ApplyGradientDescent"
 }
 node {
   name: "GradientDescent/update/NoOp_1"
@@ -33901,6 +35481,57 @@ node {
   }
 }
 node {
+  name: "conv1/conv1/gamma_1/tag"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "conv1/conv1/gamma_1"
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma_1"
+  op: "HistogramSummary"
+  input: "conv1/conv1/gamma_1/tag"
+  input: "conv1/conv1/gamma/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
   name: "conv2/weights_1/tag"
   op: "Const"
   attr {
@@ -34037,6 +35668,57 @@ node {
   op: "HistogramSummary"
   input: "conv2/conv2/beta_1/tag"
   input: "conv2/conv2/beta/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma_1/tag"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "conv2/conv2/gamma_1"
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma_1"
+  op: "HistogramSummary"
+  input: "conv2/conv2/gamma_1/tag"
+  input: "conv2/conv2/gamma/read"
   attr {
     key: "T"
     value {
@@ -34462,6 +36144,57 @@ node {
   }
 }
 node {
+  name: "conv1/conv1/gamma/gradients/tag"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "conv1/conv1/gamma/gradients"
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma/gradients"
+  op: "HistogramSummary"
+  input: "conv1/conv1/gamma/gradients/tag"
+  input: "gradients/conv1/conv1/Reshape_1_grad/Reshape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
   name: "conv2/weights/gradients/tag"
   op: "Const"
   attr {
@@ -34547,6 +36280,57 @@ node {
   op: "HistogramSummary"
   input: "conv2/conv2/beta/gradients/tag"
   input: "gradients/conv2/conv2/Reshape_grad/Reshape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma/gradients/tag"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "conv2/conv2/gamma/gradients"
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma/gradients"
+  op: "HistogramSummary"
+  input: "conv2/conv2/gamma/gradients/tag"
+  input: "gradients/conv2/conv2/Reshape_1_grad/Reshape"
   attr {
     key: "T"
     value {
@@ -35402,6 +37186,165 @@ node {
 node {
   name: "Identity_3"
   op: "Identity"
+  input: "conv1/conv1/gamma"
+  input: "^conv1/conv1/gamma/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage"
+  input: "Identity_3"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv1/conv1/gamma/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "Identity_4"
+  op: "Identity"
   input: "conv2/weights"
   input: "^conv2/weights/Assign"
   device: "/device:CPU:0"
@@ -35516,7 +37459,7 @@ node {
   name: "conv2/weights/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "conv2/weights/ExponentialMovingAverage"
-  input: "Identity_3"
+  input: "Identity_4"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -35608,7 +37551,7 @@ node {
   }
 }
 node {
-  name: "Identity_4"
+  name: "Identity_5"
   op: "Identity"
   input: "conv2/biases"
   input: "^conv2/biases/Assign"
@@ -35697,7 +37640,7 @@ node {
   name: "conv2/biases/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "conv2/biases/ExponentialMovingAverage"
-  input: "Identity_4"
+  input: "Identity_5"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -35771,7 +37714,7 @@ node {
   }
 }
 node {
-  name: "Identity_5"
+  name: "Identity_6"
   op: "Identity"
   input: "conv2/conv2/beta"
   input: "^conv2/conv2/beta/Assign"
@@ -35858,7 +37801,7 @@ node {
   name: "conv2/conv2/beta/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "conv2/conv2/beta/ExponentialMovingAverage"
-  input: "Identity_5"
+  input: "Identity_6"
   attr {
     key: "T"
     value {
@@ -35930,7 +37873,166 @@ node {
   }
 }
 node {
-  name: "Identity_6"
+  name: "Identity_7"
+  op: "Identity"
+  input: "conv2/conv2/gamma"
+  input: "^conv2/conv2/gamma/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage"
+  input: "Identity_7"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv2/conv2/gamma/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "Identity_8"
   op: "Identity"
   input: "local3/weights"
   input: "^local3/weights/Assign"
@@ -36028,7 +38130,7 @@ node {
   name: "local3/weights/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "local3/weights/ExponentialMovingAverage"
-  input: "Identity_6"
+  input: "Identity_8"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -36108,7 +38210,7 @@ node {
   }
 }
 node {
-  name: "Identity_7"
+  name: "Identity_9"
   op: "Identity"
   input: "local3/biases"
   input: "^local3/biases/Assign"
@@ -36197,7 +38299,7 @@ node {
   name: "local3/biases/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "local3/biases/ExponentialMovingAverage"
-  input: "Identity_7"
+  input: "Identity_9"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -36271,7 +38373,7 @@ node {
   }
 }
 node {
-  name: "Identity_8"
+  name: "Identity_10"
   op: "Identity"
   input: "local4/weights"
   input: "^local4/weights/Assign"
@@ -36369,7 +38471,7 @@ node {
   name: "local4/weights/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "local4/weights/ExponentialMovingAverage"
-  input: "Identity_8"
+  input: "Identity_10"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -36449,7 +38551,7 @@ node {
   }
 }
 node {
-  name: "Identity_9"
+  name: "Identity_11"
   op: "Identity"
   input: "local4/biases"
   input: "^local4/biases/Assign"
@@ -36538,7 +38640,7 @@ node {
   name: "local4/biases/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "local4/biases/ExponentialMovingAverage"
-  input: "Identity_9"
+  input: "Identity_11"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -36612,7 +38714,7 @@ node {
   }
 }
 node {
-  name: "Identity_10"
+  name: "Identity_12"
   op: "Identity"
   input: "softmax_linear/weights"
   input: "^softmax_linear/weights/Assign"
@@ -36710,7 +38812,7 @@ node {
   name: "softmax_linear/weights/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "softmax_linear/weights/ExponentialMovingAverage"
-  input: "Identity_10"
+  input: "Identity_12"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -36790,7 +38892,7 @@ node {
   }
 }
 node {
-  name: "Identity_11"
+  name: "Identity_13"
   op: "Identity"
   input: "softmax_linear/biases"
   input: "^softmax_linear/biases/Assign"
@@ -36879,7 +38981,7 @@ node {
   name: "softmax_linear/biases/ExponentialMovingAverage/Assign"
   op: "Assign"
   input: "softmax_linear/biases/ExponentialMovingAverage"
-  input: "Identity_11"
+  input: "Identity_13"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -37699,12 +39801,11 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_3/sub/x"
   op: "Const"
-  device: "/device:CPU:0"
   attr {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weights"
+        s: "loc:@conv1/conv1/gamma"
       }
     }
   }
@@ -37740,7 +39841,6 @@ node {
   op: "Sub"
   input: "ExponentialMovingAverage/AssignMovingAvg_3/sub/x"
   input: "ExponentialMovingAverage/Minimum"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -37751,7 +39851,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weights"
+        s: "loc:@conv1/conv1/gamma"
       }
     }
   }
@@ -37768,9 +39868,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_3/sub_1"
   op: "Sub"
-  input: "conv2/weights/ExponentialMovingAverage/read"
-  input: "conv2/weights/read"
-  device: "/device:CPU:0"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage/read"
+  input: "conv1/conv1/gamma/read"
   attr {
     key: "T"
     value {
@@ -37781,7 +39880,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weights"
+        s: "loc:@conv1/conv1/gamma"
       }
     }
   }
@@ -37790,15 +39889,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 5
-          }
-          dim {
-            size: 5
-          }
-          dim {
-            size: 64
-          }
           dim {
             size: 64
           }
@@ -37812,7 +39902,6 @@ node {
   op: "Mul"
   input: "ExponentialMovingAverage/AssignMovingAvg_3/sub_1"
   input: "ExponentialMovingAverage/AssignMovingAvg_3/sub"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -37823,7 +39912,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weights"
+        s: "loc:@conv1/conv1/gamma"
       }
     }
   }
@@ -37832,15 +39921,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 5
-          }
-          dim {
-            size: 5
-          }
-          dim {
-            size: 64
-          }
           dim {
             size: 64
           }
@@ -37852,9 +39932,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_3"
   op: "AssignSub"
-  input: "conv2/weights/ExponentialMovingAverage"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_3/mul"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -37865,7 +39944,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weights"
+        s: "loc:@conv1/conv1/gamma"
       }
     }
   }
@@ -37874,15 +39953,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 5
-          }
-          dim {
-            size: 5
-          }
-          dim {
-            size: 64
-          }
           dim {
             size: 64
           }
@@ -37905,7 +39975,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/biases"
+        s: "loc:@conv2/weights"
       }
     }
   }
@@ -37952,7 +40022,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/biases"
+        s: "loc:@conv2/weights"
       }
     }
   }
@@ -37969,8 +40039,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_4/sub_1"
   op: "Sub"
-  input: "conv2/biases/ExponentialMovingAverage/read"
-  input: "conv2/biases/read"
+  input: "conv2/weights/ExponentialMovingAverage/read"
+  input: "conv2/weights/read"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -37982,7 +40052,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/biases"
+        s: "loc:@conv2/weights"
       }
     }
   }
@@ -37991,6 +40061,15 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
           dim {
             size: 64
           }
@@ -38015,7 +40094,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/biases"
+        s: "loc:@conv2/weights"
       }
     }
   }
@@ -38024,6 +40103,15 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
           dim {
             size: 64
           }
@@ -38035,7 +40123,7 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_4"
   op: "AssignSub"
-  input: "conv2/biases/ExponentialMovingAverage"
+  input: "conv2/weights/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_4/mul"
   device: "/device:CPU:0"
   attr {
@@ -38048,7 +40136,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/biases"
+        s: "loc:@conv2/weights"
       }
     }
   }
@@ -38057,6 +40145,15 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
           dim {
             size: 64
           }
@@ -38074,11 +40171,12 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_5/sub/x"
   op: "Const"
+  device: "/device:CPU:0"
   attr {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/beta"
+        s: "loc:@conv2/biases"
       }
     }
   }
@@ -38114,6 +40212,7 @@ node {
   op: "Sub"
   input: "ExponentialMovingAverage/AssignMovingAvg_5/sub/x"
   input: "ExponentialMovingAverage/Minimum"
+  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38124,7 +40223,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/beta"
+        s: "loc:@conv2/biases"
       }
     }
   }
@@ -38141,8 +40240,9 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_5/sub_1"
   op: "Sub"
-  input: "conv2/conv2/beta/ExponentialMovingAverage/read"
-  input: "conv2/conv2/beta/read"
+  input: "conv2/biases/ExponentialMovingAverage/read"
+  input: "conv2/biases/read"
+  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38153,7 +40253,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/beta"
+        s: "loc:@conv2/biases"
       }
     }
   }
@@ -38175,6 +40275,7 @@ node {
   op: "Mul"
   input: "ExponentialMovingAverage/AssignMovingAvg_5/sub_1"
   input: "ExponentialMovingAverage/AssignMovingAvg_5/sub"
+  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38185,7 +40286,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/beta"
+        s: "loc:@conv2/biases"
       }
     }
   }
@@ -38205,8 +40306,9 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_5"
   op: "AssignSub"
-  input: "conv2/conv2/beta/ExponentialMovingAverage"
+  input: "conv2/biases/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_5/mul"
+  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38217,7 +40319,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/beta"
+        s: "loc:@conv2/biases"
       }
     }
   }
@@ -38243,12 +40345,11 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_6/sub/x"
   op: "Const"
-  device: "/device:CPU:0"
   attr {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weights"
+        s: "loc:@conv2/conv2/beta"
       }
     }
   }
@@ -38284,7 +40385,6 @@ node {
   op: "Sub"
   input: "ExponentialMovingAverage/AssignMovingAvg_6/sub/x"
   input: "ExponentialMovingAverage/Minimum"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38295,7 +40395,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weights"
+        s: "loc:@conv2/conv2/beta"
       }
     }
   }
@@ -38312,9 +40412,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_6/sub_1"
   op: "Sub"
-  input: "local3/weights/ExponentialMovingAverage/read"
-  input: "local3/weights/read"
-  device: "/device:CPU:0"
+  input: "conv2/conv2/beta/ExponentialMovingAverage/read"
+  input: "conv2/conv2/beta/read"
   attr {
     key: "T"
     value {
@@ -38325,7 +40424,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weights"
+        s: "loc:@conv2/conv2/beta"
       }
     }
   }
@@ -38335,10 +40434,7 @@ node {
       list {
         shape {
           dim {
-            size: 2304
-          }
-          dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -38350,7 +40446,6 @@ node {
   op: "Mul"
   input: "ExponentialMovingAverage/AssignMovingAvg_6/sub_1"
   input: "ExponentialMovingAverage/AssignMovingAvg_6/sub"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38361,7 +40456,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weights"
+        s: "loc:@conv2/conv2/beta"
       }
     }
   }
@@ -38371,10 +40466,7 @@ node {
       list {
         shape {
           dim {
-            size: 2304
-          }
-          dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -38384,9 +40476,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_6"
   op: "AssignSub"
-  input: "local3/weights/ExponentialMovingAverage"
+  input: "conv2/conv2/beta/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_6/mul"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38397,7 +40488,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weights"
+        s: "loc:@conv2/conv2/beta"
       }
     }
   }
@@ -38407,10 +40498,7 @@ node {
       list {
         shape {
           dim {
-            size: 2304
-          }
-          dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -38426,12 +40514,11 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_7/sub/x"
   op: "Const"
-  device: "/device:CPU:0"
   attr {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/biases"
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -38467,7 +40554,6 @@ node {
   op: "Sub"
   input: "ExponentialMovingAverage/AssignMovingAvg_7/sub/x"
   input: "ExponentialMovingAverage/Minimum"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38478,7 +40564,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/biases"
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -38495,9 +40581,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_7/sub_1"
   op: "Sub"
-  input: "local3/biases/ExponentialMovingAverage/read"
-  input: "local3/biases/read"
-  device: "/device:CPU:0"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage/read"
+  input: "conv2/conv2/gamma/read"
   attr {
     key: "T"
     value {
@@ -38508,7 +40593,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/biases"
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -38518,7 +40603,7 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -38530,7 +40615,6 @@ node {
   op: "Mul"
   input: "ExponentialMovingAverage/AssignMovingAvg_7/sub_1"
   input: "ExponentialMovingAverage/AssignMovingAvg_7/sub"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38541,7 +40625,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/biases"
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -38551,7 +40635,7 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -38561,9 +40645,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_7"
   op: "AssignSub"
-  input: "local3/biases/ExponentialMovingAverage"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_7/mul"
-  device: "/device:CPU:0"
   attr {
     key: "T"
     value {
@@ -38574,7 +40657,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/biases"
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -38584,7 +40667,7 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -38605,7 +40688,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weights"
+        s: "loc:@local3/weights"
       }
     }
   }
@@ -38652,7 +40735,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weights"
+        s: "loc:@local3/weights"
       }
     }
   }
@@ -38669,8 +40752,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_8/sub_1"
   op: "Sub"
-  input: "local4/weights/ExponentialMovingAverage/read"
-  input: "local4/weights/read"
+  input: "local3/weights/ExponentialMovingAverage/read"
+  input: "local3/weights/read"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -38682,7 +40765,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weights"
+        s: "loc:@local3/weights"
       }
     }
   }
@@ -38692,10 +40775,10 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 2304
           }
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -38718,7 +40801,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weights"
+        s: "loc:@local3/weights"
       }
     }
   }
@@ -38728,10 +40811,10 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 2304
           }
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -38741,7 +40824,7 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_8"
   op: "AssignSub"
-  input: "local4/weights/ExponentialMovingAverage"
+  input: "local3/weights/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_8/mul"
   device: "/device:CPU:0"
   attr {
@@ -38754,7 +40837,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weights"
+        s: "loc:@local3/weights"
       }
     }
   }
@@ -38764,10 +40847,10 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 2304
           }
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -38788,7 +40871,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/biases"
+        s: "loc:@local3/biases"
       }
     }
   }
@@ -38835,7 +40918,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/biases"
+        s: "loc:@local3/biases"
       }
     }
   }
@@ -38852,8 +40935,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_9/sub_1"
   op: "Sub"
-  input: "local4/biases/ExponentialMovingAverage/read"
-  input: "local4/biases/read"
+  input: "local3/biases/ExponentialMovingAverage/read"
+  input: "local3/biases/read"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -38865,7 +40948,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/biases"
+        s: "loc:@local3/biases"
       }
     }
   }
@@ -38875,7 +40958,7 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -38898,7 +40981,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/biases"
+        s: "loc:@local3/biases"
       }
     }
   }
@@ -38908,7 +40991,7 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -38918,7 +41001,7 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_9"
   op: "AssignSub"
-  input: "local4/biases/ExponentialMovingAverage"
+  input: "local3/biases/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_9/mul"
   device: "/device:CPU:0"
   attr {
@@ -38931,7 +41014,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/biases"
+        s: "loc:@local3/biases"
       }
     }
   }
@@ -38941,7 +41024,7 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -38962,7 +41045,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/weights"
+        s: "loc:@local4/weights"
       }
     }
   }
@@ -39009,7 +41092,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/weights"
+        s: "loc:@local4/weights"
       }
     }
   }
@@ -39026,8 +41109,8 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_10/sub_1"
   op: "Sub"
-  input: "softmax_linear/weights/ExponentialMovingAverage/read"
-  input: "softmax_linear/weights/read"
+  input: "local4/weights/ExponentialMovingAverage/read"
+  input: "local4/weights/read"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -39039,7 +41122,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/weights"
+        s: "loc:@local4/weights"
       }
     }
   }
@@ -39049,10 +41132,10 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
           dim {
-            size: 10
+            size: 192
           }
         }
       }
@@ -39075,7 +41158,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/weights"
+        s: "loc:@local4/weights"
       }
     }
   }
@@ -39085,10 +41168,10 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
           dim {
-            size: 10
+            size: 192
           }
         }
       }
@@ -39098,7 +41181,7 @@ node {
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_10"
   op: "AssignSub"
-  input: "softmax_linear/weights/ExponentialMovingAverage"
+  input: "local4/weights/ExponentialMovingAverage"
   input: "ExponentialMovingAverage/AssignMovingAvg_10/mul"
   device: "/device:CPU:0"
   attr {
@@ -39111,7 +41194,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/weights"
+        s: "loc:@local4/weights"
       }
     }
   }
@@ -39121,10 +41204,10 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
           dim {
-            size: 10
+            size: 192
           }
         }
       }
@@ -39145,7 +41228,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/biases"
+        s: "loc:@local4/biases"
       }
     }
   }
@@ -39192,7 +41275,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/biases"
+        s: "loc:@local4/biases"
       }
     }
   }
@@ -39208,6 +41291,363 @@ node {
 }
 node {
   name: "ExponentialMovingAverage/AssignMovingAvg_11/sub_1"
+  op: "Sub"
+  input: "local4/biases/ExponentialMovingAverage/read"
+  input: "local4/biases/read"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@local4/biases"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_11/mul"
+  op: "Mul"
+  input: "ExponentialMovingAverage/AssignMovingAvg_11/sub_1"
+  input: "ExponentialMovingAverage/AssignMovingAvg_11/sub"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@local4/biases"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_11"
+  op: "AssignSub"
+  input: "local4/biases/ExponentialMovingAverage"
+  input: "ExponentialMovingAverage/AssignMovingAvg_11/mul"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@local4/biases"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_12/sub/x"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/weights"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_12/sub"
+  op: "Sub"
+  input: "ExponentialMovingAverage/AssignMovingAvg_12/sub/x"
+  input: "ExponentialMovingAverage/Minimum"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/weights"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_12/sub_1"
+  op: "Sub"
+  input: "softmax_linear/weights/ExponentialMovingAverage/read"
+  input: "softmax_linear/weights/read"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/weights"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_12/mul"
+  op: "Mul"
+  input: "ExponentialMovingAverage/AssignMovingAvg_12/sub_1"
+  input: "ExponentialMovingAverage/AssignMovingAvg_12/sub"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/weights"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_12"
+  op: "AssignSub"
+  input: "softmax_linear/weights/ExponentialMovingAverage"
+  input: "ExponentialMovingAverage/AssignMovingAvg_12/mul"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/weights"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_13/sub/x"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/biases"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_13/sub"
+  op: "Sub"
+  input: "ExponentialMovingAverage/AssignMovingAvg_13/sub/x"
+  input: "ExponentialMovingAverage/Minimum"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/biases"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "ExponentialMovingAverage/AssignMovingAvg_13/sub_1"
   op: "Sub"
   input: "softmax_linear/biases/ExponentialMovingAverage/read"
   input: "softmax_linear/biases/read"
@@ -39240,10 +41680,10 @@ node {
   }
 }
 node {
-  name: "ExponentialMovingAverage/AssignMovingAvg_11/mul"
+  name: "ExponentialMovingAverage/AssignMovingAvg_13/mul"
   op: "Mul"
-  input: "ExponentialMovingAverage/AssignMovingAvg_11/sub_1"
-  input: "ExponentialMovingAverage/AssignMovingAvg_11/sub"
+  input: "ExponentialMovingAverage/AssignMovingAvg_13/sub_1"
+  input: "ExponentialMovingAverage/AssignMovingAvg_13/sub"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -39273,10 +41713,10 @@ node {
   }
 }
 node {
-  name: "ExponentialMovingAverage/AssignMovingAvg_11"
+  name: "ExponentialMovingAverage/AssignMovingAvg_13"
   op: "AssignSub"
   input: "softmax_linear/biases/ExponentialMovingAverage"
-  input: "ExponentialMovingAverage/AssignMovingAvg_11/mul"
+  input: "ExponentialMovingAverage/AssignMovingAvg_13/mul"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -39315,21 +41755,23 @@ node {
   name: "ExponentialMovingAverage/NoOp"
   op: "NoOp"
   input: "^ExponentialMovingAverage/AssignMovingAvg_2"
-  input: "^ExponentialMovingAverage/AssignMovingAvg_5"
+  input: "^ExponentialMovingAverage/AssignMovingAvg_3"
+  input: "^ExponentialMovingAverage/AssignMovingAvg_6"
+  input: "^ExponentialMovingAverage/AssignMovingAvg_7"
 }
 node {
   name: "ExponentialMovingAverage/NoOp_1"
   op: "NoOp"
   input: "^ExponentialMovingAverage/AssignMovingAvg"
   input: "^ExponentialMovingAverage/AssignMovingAvg_1"
-  input: "^ExponentialMovingAverage/AssignMovingAvg_3"
   input: "^ExponentialMovingAverage/AssignMovingAvg_4"
-  input: "^ExponentialMovingAverage/AssignMovingAvg_6"
-  input: "^ExponentialMovingAverage/AssignMovingAvg_7"
+  input: "^ExponentialMovingAverage/AssignMovingAvg_5"
   input: "^ExponentialMovingAverage/AssignMovingAvg_8"
   input: "^ExponentialMovingAverage/AssignMovingAvg_9"
   input: "^ExponentialMovingAverage/AssignMovingAvg_10"
   input: "^ExponentialMovingAverage/AssignMovingAvg_11"
+  input: "^ExponentialMovingAverage/AssignMovingAvg_12"
+  input: "^ExponentialMovingAverage/AssignMovingAvg_13"
   device: "/device:CPU:0"
 }
 node {
@@ -39349,9 +41791,11 @@ node {
   op: "NoOp"
   input: "^global_step/Assign"
   input: "^conv1/conv1/beta/Assign"
+  input: "^conv1/conv1/gamma/Assign"
   input: "^conv1/conv1/moving_mean/Assign"
   input: "^conv1/conv1/moving_variance/Assign"
   input: "^conv2/conv2/beta/Assign"
+  input: "^conv2/conv2/gamma/Assign"
   input: "^conv2/conv2/moving_mean/Assign"
   input: "^conv2/conv2/moving_variance/Assign"
   input: "^conv1/weight_loss/avg/Assign"
@@ -39362,7 +41806,9 @@ node {
   input: "^cross_entropy/avg/Assign"
   input: "^total_loss/avg/Assign"
   input: "^conv1/conv1/beta/ExponentialMovingAverage/Assign"
+  input: "^conv1/conv1/gamma/ExponentialMovingAverage/Assign"
   input: "^conv2/conv2/beta/ExponentialMovingAverage/Assign"
+  input: "^conv2/conv2/gamma/ExponentialMovingAverage/Assign"
 }
 node {
   name: "init/NoOp_1"
@@ -39522,6 +41968,34 @@ node {
 node {
   name: "report_uninitialized_variables/IsVariableInitialized_4"
   op: "IsVariableInitialized"
+  input: "conv1/conv1/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_5"
+  op: "IsVariableInitialized"
   input: "conv1/conv1/moving_mean"
   attr {
     key: "_class"
@@ -39548,7 +42022,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_5"
+  name: "report_uninitialized_variables/IsVariableInitialized_6"
   op: "IsVariableInitialized"
   input: "conv1/conv1/moving_variance"
   attr {
@@ -39576,7 +42050,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_6"
+  name: "report_uninitialized_variables/IsVariableInitialized_7"
   op: "IsVariableInitialized"
   input: "conv2/weights"
   device: "/device:CPU:0"
@@ -39605,7 +42079,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_7"
+  name: "report_uninitialized_variables/IsVariableInitialized_8"
   op: "IsVariableInitialized"
   input: "conv2/biases"
   device: "/device:CPU:0"
@@ -39634,7 +42108,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_8"
+  name: "report_uninitialized_variables/IsVariableInitialized_9"
   op: "IsVariableInitialized"
   input: "conv2/conv2/beta"
   attr {
@@ -39662,7 +42136,35 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_9"
+  name: "report_uninitialized_variables/IsVariableInitialized_10"
+  op: "IsVariableInitialized"
+  input: "conv2/conv2/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_11"
   op: "IsVariableInitialized"
   input: "conv2/conv2/moving_mean"
   attr {
@@ -39690,7 +42192,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_10"
+  name: "report_uninitialized_variables/IsVariableInitialized_12"
   op: "IsVariableInitialized"
   input: "conv2/conv2/moving_variance"
   attr {
@@ -39718,7 +42220,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_11"
+  name: "report_uninitialized_variables/IsVariableInitialized_13"
   op: "IsVariableInitialized"
   input: "local3/weights"
   device: "/device:CPU:0"
@@ -39747,7 +42249,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_12"
+  name: "report_uninitialized_variables/IsVariableInitialized_14"
   op: "IsVariableInitialized"
   input: "local3/biases"
   device: "/device:CPU:0"
@@ -39776,7 +42278,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_13"
+  name: "report_uninitialized_variables/IsVariableInitialized_15"
   op: "IsVariableInitialized"
   input: "local4/weights"
   device: "/device:CPU:0"
@@ -39805,7 +42307,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_14"
+  name: "report_uninitialized_variables/IsVariableInitialized_16"
   op: "IsVariableInitialized"
   input: "local4/biases"
   device: "/device:CPU:0"
@@ -39834,7 +42336,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_15"
+  name: "report_uninitialized_variables/IsVariableInitialized_17"
   op: "IsVariableInitialized"
   input: "softmax_linear/weights"
   device: "/device:CPU:0"
@@ -39863,7 +42365,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_16"
+  name: "report_uninitialized_variables/IsVariableInitialized_18"
   op: "IsVariableInitialized"
   input: "softmax_linear/biases"
   device: "/device:CPU:0"
@@ -39892,7 +42394,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_17"
+  name: "report_uninitialized_variables/IsVariableInitialized_19"
   op: "IsVariableInitialized"
   input: "conv1/weight_loss/avg"
   attr {
@@ -39920,7 +42422,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_18"
+  name: "report_uninitialized_variables/IsVariableInitialized_20"
   op: "IsVariableInitialized"
   input: "conv2/weight_loss/avg"
   attr {
@@ -39948,7 +42450,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_19"
+  name: "report_uninitialized_variables/IsVariableInitialized_21"
   op: "IsVariableInitialized"
   input: "local3/weight_loss/avg"
   attr {
@@ -39976,7 +42478,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_20"
+  name: "report_uninitialized_variables/IsVariableInitialized_22"
   op: "IsVariableInitialized"
   input: "local4/weight_loss/avg"
   attr {
@@ -40004,7 +42506,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_21"
+  name: "report_uninitialized_variables/IsVariableInitialized_23"
   op: "IsVariableInitialized"
   input: "softmax_linear/weight_loss/avg"
   attr {
@@ -40032,7 +42534,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_22"
+  name: "report_uninitialized_variables/IsVariableInitialized_24"
   op: "IsVariableInitialized"
   input: "cross_entropy/avg"
   attr {
@@ -40060,7 +42562,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_23"
+  name: "report_uninitialized_variables/IsVariableInitialized_25"
   op: "IsVariableInitialized"
   input: "total_loss/avg"
   attr {
@@ -40088,7 +42590,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_24"
+  name: "report_uninitialized_variables/IsVariableInitialized_26"
   op: "IsVariableInitialized"
   input: "conv1/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40117,7 +42619,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_25"
+  name: "report_uninitialized_variables/IsVariableInitialized_27"
   op: "IsVariableInitialized"
   input: "conv1/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40146,7 +42648,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_26"
+  name: "report_uninitialized_variables/IsVariableInitialized_28"
   op: "IsVariableInitialized"
   input: "conv1/conv1/beta/ExponentialMovingAverage"
   attr {
@@ -40174,7 +42676,35 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_27"
+  name: "report_uninitialized_variables/IsVariableInitialized_29"
+  op: "IsVariableInitialized"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_30"
   op: "IsVariableInitialized"
   input: "conv2/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40203,7 +42733,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_28"
+  name: "report_uninitialized_variables/IsVariableInitialized_31"
   op: "IsVariableInitialized"
   input: "conv2/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40232,7 +42762,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_29"
+  name: "report_uninitialized_variables/IsVariableInitialized_32"
   op: "IsVariableInitialized"
   input: "conv2/conv2/beta/ExponentialMovingAverage"
   attr {
@@ -40260,7 +42790,35 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_30"
+  name: "report_uninitialized_variables/IsVariableInitialized_33"
+  op: "IsVariableInitialized"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_34"
   op: "IsVariableInitialized"
   input: "local3/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40289,7 +42847,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_31"
+  name: "report_uninitialized_variables/IsVariableInitialized_35"
   op: "IsVariableInitialized"
   input: "local3/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40318,7 +42876,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_32"
+  name: "report_uninitialized_variables/IsVariableInitialized_36"
   op: "IsVariableInitialized"
   input: "local4/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40347,7 +42905,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_33"
+  name: "report_uninitialized_variables/IsVariableInitialized_37"
   op: "IsVariableInitialized"
   input: "local4/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40376,7 +42934,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_34"
+  name: "report_uninitialized_variables/IsVariableInitialized_38"
   op: "IsVariableInitialized"
   input: "softmax_linear/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40405,7 +42963,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_35"
+  name: "report_uninitialized_variables/IsVariableInitialized_39"
   op: "IsVariableInitialized"
   input: "softmax_linear/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -40472,10 +43030,14 @@ node {
   input: "report_uninitialized_variables/IsVariableInitialized_33"
   input: "report_uninitialized_variables/IsVariableInitialized_34"
   input: "report_uninitialized_variables/IsVariableInitialized_35"
+  input: "report_uninitialized_variables/IsVariableInitialized_36"
+  input: "report_uninitialized_variables/IsVariableInitialized_37"
+  input: "report_uninitialized_variables/IsVariableInitialized_38"
+  input: "report_uninitialized_variables/IsVariableInitialized_39"
   attr {
     key: "N"
     value {
-      i: 36
+      i: 40
     }
   }
   attr {
@@ -40490,7 +43052,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -40513,7 +43075,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -40529,7 +43091,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -40548,18 +43110,20 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 36
+            size: 40
           }
         }
         string_val: "global_step"
         string_val: "conv1/weights"
         string_val: "conv1/biases"
         string_val: "conv1/conv1/beta"
+        string_val: "conv1/conv1/gamma"
         string_val: "conv1/conv1/moving_mean"
         string_val: "conv1/conv1/moving_variance"
         string_val: "conv2/weights"
         string_val: "conv2/biases"
         string_val: "conv2/conv2/beta"
+        string_val: "conv2/conv2/gamma"
         string_val: "conv2/conv2/moving_mean"
         string_val: "conv2/conv2/moving_variance"
         string_val: "local3/weights"
@@ -40578,9 +43142,11 @@ node {
         string_val: "conv1/weights/ExponentialMovingAverage"
         string_val: "conv1/biases/ExponentialMovingAverage"
         string_val: "conv1/conv1/beta/ExponentialMovingAverage"
+        string_val: "conv1/conv1/gamma/ExponentialMovingAverage"
         string_val: "conv2/weights/ExponentialMovingAverage"
         string_val: "conv2/biases/ExponentialMovingAverage"
         string_val: "conv2/conv2/beta/ExponentialMovingAverage"
+        string_val: "conv2/conv2/gamma/ExponentialMovingAverage"
         string_val: "local3/weights/ExponentialMovingAverage"
         string_val: "local3/biases/ExponentialMovingAverage"
         string_val: "local4/weights/ExponentialMovingAverage"
@@ -40622,7 +43188,7 @@ node {
             size: 1
           }
         }
-        int_val: 36
+        int_val: 40
       }
     }
   }
@@ -40897,7 +43463,7 @@ node {
             size: 1
           }
         }
-        int_val: 36
+        int_val: 40
       }
     }
   }
@@ -41196,7 +43762,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -41262,7 +43828,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -41573,6 +44139,34 @@ node {
 node {
   name: "report_uninitialized_variables_1/IsVariableInitialized_4"
   op: "IsVariableInitialized"
+  input: "conv1/conv1/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_5"
+  op: "IsVariableInitialized"
   input: "conv1/conv1/moving_mean"
   attr {
     key: "_class"
@@ -41599,7 +44193,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_5"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_6"
   op: "IsVariableInitialized"
   input: "conv1/conv1/moving_variance"
   attr {
@@ -41627,7 +44221,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_6"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_7"
   op: "IsVariableInitialized"
   input: "conv2/weights"
   device: "/device:CPU:0"
@@ -41656,7 +44250,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_7"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_8"
   op: "IsVariableInitialized"
   input: "conv2/biases"
   device: "/device:CPU:0"
@@ -41685,7 +44279,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_8"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_9"
   op: "IsVariableInitialized"
   input: "conv2/conv2/beta"
   attr {
@@ -41713,7 +44307,35 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_9"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_10"
+  op: "IsVariableInitialized"
+  input: "conv2/conv2/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_11"
   op: "IsVariableInitialized"
   input: "conv2/conv2/moving_mean"
   attr {
@@ -41741,7 +44363,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_10"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_12"
   op: "IsVariableInitialized"
   input: "conv2/conv2/moving_variance"
   attr {
@@ -41769,7 +44391,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_11"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_13"
   op: "IsVariableInitialized"
   input: "local3/weights"
   device: "/device:CPU:0"
@@ -41798,7 +44420,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_12"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_14"
   op: "IsVariableInitialized"
   input: "local3/biases"
   device: "/device:CPU:0"
@@ -41827,7 +44449,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_13"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_15"
   op: "IsVariableInitialized"
   input: "local4/weights"
   device: "/device:CPU:0"
@@ -41856,7 +44478,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_14"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_16"
   op: "IsVariableInitialized"
   input: "local4/biases"
   device: "/device:CPU:0"
@@ -41885,7 +44507,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_15"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_17"
   op: "IsVariableInitialized"
   input: "softmax_linear/weights"
   device: "/device:CPU:0"
@@ -41914,7 +44536,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_16"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_18"
   op: "IsVariableInitialized"
   input: "softmax_linear/biases"
   device: "/device:CPU:0"
@@ -41943,7 +44565,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_17"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_19"
   op: "IsVariableInitialized"
   input: "conv1/weight_loss/avg"
   attr {
@@ -41971,7 +44593,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_18"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_20"
   op: "IsVariableInitialized"
   input: "conv2/weight_loss/avg"
   attr {
@@ -41999,7 +44621,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_19"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_21"
   op: "IsVariableInitialized"
   input: "local3/weight_loss/avg"
   attr {
@@ -42027,7 +44649,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_20"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_22"
   op: "IsVariableInitialized"
   input: "local4/weight_loss/avg"
   attr {
@@ -42055,7 +44677,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_21"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_23"
   op: "IsVariableInitialized"
   input: "softmax_linear/weight_loss/avg"
   attr {
@@ -42083,7 +44705,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_22"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_24"
   op: "IsVariableInitialized"
   input: "cross_entropy/avg"
   attr {
@@ -42111,7 +44733,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_23"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_25"
   op: "IsVariableInitialized"
   input: "total_loss/avg"
   attr {
@@ -42139,7 +44761,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_24"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_26"
   op: "IsVariableInitialized"
   input: "conv1/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42168,7 +44790,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_25"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_27"
   op: "IsVariableInitialized"
   input: "conv1/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42197,7 +44819,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_26"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_28"
   op: "IsVariableInitialized"
   input: "conv1/conv1/beta/ExponentialMovingAverage"
   attr {
@@ -42225,7 +44847,35 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_27"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_29"
+  op: "IsVariableInitialized"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv1/conv1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_30"
   op: "IsVariableInitialized"
   input: "conv2/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42254,7 +44904,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_28"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_31"
   op: "IsVariableInitialized"
   input: "conv2/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42283,7 +44933,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_29"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_32"
   op: "IsVariableInitialized"
   input: "conv2/conv2/beta/ExponentialMovingAverage"
   attr {
@@ -42311,7 +44961,35 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_30"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_33"
+  op: "IsVariableInitialized"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv2/conv2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_34"
   op: "IsVariableInitialized"
   input: "local3/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42340,7 +45018,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_31"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_35"
   op: "IsVariableInitialized"
   input: "local3/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42369,7 +45047,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_32"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_36"
   op: "IsVariableInitialized"
   input: "local4/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42398,7 +45076,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_33"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_37"
   op: "IsVariableInitialized"
   input: "local4/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42427,7 +45105,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_34"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_38"
   op: "IsVariableInitialized"
   input: "softmax_linear/weights/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42456,7 +45134,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_35"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_39"
   op: "IsVariableInitialized"
   input: "softmax_linear/biases/ExponentialMovingAverage"
   device: "/device:CPU:0"
@@ -42523,10 +45201,14 @@ node {
   input: "report_uninitialized_variables_1/IsVariableInitialized_33"
   input: "report_uninitialized_variables_1/IsVariableInitialized_34"
   input: "report_uninitialized_variables_1/IsVariableInitialized_35"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_36"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_37"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_38"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_39"
   attr {
     key: "N"
     value {
-      i: 36
+      i: 40
     }
   }
   attr {
@@ -42541,7 +45223,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -42564,7 +45246,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -42580,7 +45262,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -42599,18 +45281,20 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 36
+            size: 40
           }
         }
         string_val: "global_step"
         string_val: "conv1/weights"
         string_val: "conv1/biases"
         string_val: "conv1/conv1/beta"
+        string_val: "conv1/conv1/gamma"
         string_val: "conv1/conv1/moving_mean"
         string_val: "conv1/conv1/moving_variance"
         string_val: "conv2/weights"
         string_val: "conv2/biases"
         string_val: "conv2/conv2/beta"
+        string_val: "conv2/conv2/gamma"
         string_val: "conv2/conv2/moving_mean"
         string_val: "conv2/conv2/moving_variance"
         string_val: "local3/weights"
@@ -42629,9 +45313,11 @@ node {
         string_val: "conv1/weights/ExponentialMovingAverage"
         string_val: "conv1/biases/ExponentialMovingAverage"
         string_val: "conv1/conv1/beta/ExponentialMovingAverage"
+        string_val: "conv1/conv1/gamma/ExponentialMovingAverage"
         string_val: "conv2/weights/ExponentialMovingAverage"
         string_val: "conv2/biases/ExponentialMovingAverage"
         string_val: "conv2/conv2/beta/ExponentialMovingAverage"
+        string_val: "conv2/conv2/gamma/ExponentialMovingAverage"
         string_val: "local3/weights/ExponentialMovingAverage"
         string_val: "local3/biases/ExponentialMovingAverage"
         string_val: "local4/weights/ExponentialMovingAverage"
@@ -42673,7 +45359,7 @@ node {
             size: 1
           }
         }
-        int_val: 36
+        int_val: 40
       }
     }
   }
@@ -42948,7 +45634,7 @@ node {
             size: 1
           }
         }
-        int_val: 36
+        int_val: 40
       }
     }
   }
@@ -43247,7 +45933,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -43313,7 +45999,7 @@ node {
       list {
         shape {
           dim {
-            size: 36
+            size: 40
           }
         }
       }
@@ -43455,9 +46141,11 @@ node {
   input: "conv1/weights_1"
   input: "conv1/biases_1"
   input: "conv1/conv1/beta_1"
+  input: "conv1/conv1/gamma_1"
   input: "conv2/weights_1"
   input: "conv2/biases_1"
   input: "conv2/conv2/beta_1"
+  input: "conv2/conv2/gamma_1"
   input: "local3/weights_1"
   input: "local3/biases_1"
   input: "local4/weights_1"
@@ -43466,8 +46154,10 @@ node {
   input: "softmax_linear/biases_1"
   input: "conv1/weights/gradients"
   input: "conv1/conv1/beta/gradients"
+  input: "conv1/conv1/gamma/gradients"
   input: "conv2/weights/gradients"
   input: "conv2/conv2/beta/gradients"
+  input: "conv2/conv2/gamma/gradients"
   input: "local3/weights/gradients"
   input: "local3/biases/gradients"
   input: "local4/weights/gradients"
@@ -43477,7 +46167,7 @@ node {
   attr {
     key: "N"
     value {
-      i: 50
+      i: 54
     }
   }
   attr {
@@ -43545,7 +46235,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_acc48c510b5b41aa9305ee8d67b8fe0c/part"
+        string_val: "_temp_53e400b4525e4670bf7382bcf85c070b/part"
       }
     }
   }
@@ -43662,7 +46352,7 @@ node {
       list {
         shape {
           dim {
-            size: 16
+            size: 20
           }
         }
       }
@@ -43681,16 +46371,20 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 16
+            size: 20
           }
         }
         string_val: "conv1/conv1/beta"
         string_val: "conv1/conv1/beta/ExponentialMovingAverage"
+        string_val: "conv1/conv1/gamma"
+        string_val: "conv1/conv1/gamma/ExponentialMovingAverage"
         string_val: "conv1/conv1/moving_mean"
         string_val: "conv1/conv1/moving_variance"
         string_val: "conv1/weight_loss/avg"
         string_val: "conv2/conv2/beta"
         string_val: "conv2/conv2/beta/ExponentialMovingAverage"
+        string_val: "conv2/conv2/gamma"
+        string_val: "conv2/conv2/gamma/ExponentialMovingAverage"
         string_val: "conv2/conv2/moving_mean"
         string_val: "conv2/conv2/moving_variance"
         string_val: "conv2/weight_loss/avg"
@@ -43713,7 +46407,7 @@ node {
       list {
         shape {
           dim {
-            size: 16
+            size: 20
           }
         }
       }
@@ -43732,9 +46426,13 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 16
+            size: 20
           }
         }
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
         string_val: ""
         string_val: ""
         string_val: ""
@@ -43763,11 +46461,15 @@ node {
   input: "save/SaveV2/shape_and_slices"
   input: "conv1/conv1/beta"
   input: "conv1/conv1/beta/ExponentialMovingAverage"
+  input: "conv1/conv1/gamma"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage"
   input: "conv1/conv1/moving_mean"
   input: "conv1/conv1/moving_variance"
   input: "conv1/weight_loss/avg"
   input: "conv2/conv2/beta"
   input: "conv2/conv2/beta/ExponentialMovingAverage"
+  input: "conv2/conv2/gamma"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage"
   input: "conv2/conv2/moving_mean"
   input: "conv2/conv2/moving_variance"
   input: "conv2/weight_loss/avg"
@@ -43781,6 +46483,10 @@ node {
     key: "dtypes"
     value {
       list {
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
@@ -44464,7 +47170,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv1/conv1/moving_mean"
+        string_val: "conv1/conv1/gamma"
       }
     }
   }
@@ -44533,7 +47239,7 @@ node {
 node {
   name: "save/Assign_2"
   op: "Assign"
-  input: "conv1/conv1/moving_mean"
+  input: "conv1/conv1/gamma"
   input: "save/RestoreV2_2"
   attr {
     key: "T"
@@ -44545,7 +47251,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv1/conv1/moving_mean"
+        s: "loc:@conv1/conv1/gamma"
       }
     }
   }
@@ -44605,7 +47311,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv1/conv1/moving_variance"
+        string_val: "conv1/conv1/gamma/ExponentialMovingAverage"
       }
     }
   }
@@ -44674,7 +47380,7 @@ node {
 node {
   name: "save/Assign_3"
   op: "Assign"
-  input: "conv1/conv1/moving_variance"
+  input: "conv1/conv1/gamma/ExponentialMovingAverage"
   input: "save/RestoreV2_3"
   attr {
     key: "T"
@@ -44686,7 +47392,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv1/conv1/moving_variance"
+        s: "loc:@conv1/conv1/gamma"
       }
     }
   }
@@ -44746,7 +47452,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv1/weight_loss/avg"
+        string_val: "conv1/conv1/moving_mean"
       }
     }
   }
@@ -44815,7 +47521,7 @@ node {
 node {
   name: "save/Assign_4"
   op: "Assign"
-  input: "conv1/weight_loss/avg"
+  input: "conv1/conv1/moving_mean"
   input: "save/RestoreV2_4"
   attr {
     key: "T"
@@ -44827,7 +47533,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv1/weight_loss/avg"
+        s: "loc:@conv1/conv1/moving_mean"
       }
     }
   }
@@ -44836,6 +47542,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -44884,7 +47593,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/conv2/beta"
+        string_val: "conv1/conv1/moving_variance"
       }
     }
   }
@@ -44953,7 +47662,7 @@ node {
 node {
   name: "save/Assign_5"
   op: "Assign"
-  input: "conv2/conv2/beta"
+  input: "conv1/conv1/moving_variance"
   input: "save/RestoreV2_5"
   attr {
     key: "T"
@@ -44965,7 +47674,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/beta"
+        s: "loc:@conv1/conv1/moving_variance"
       }
     }
   }
@@ -45025,7 +47734,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/conv2/beta/ExponentialMovingAverage"
+        string_val: "conv1/weight_loss/avg"
       }
     }
   }
@@ -45094,7 +47803,7 @@ node {
 node {
   name: "save/Assign_6"
   op: "Assign"
-  input: "conv2/conv2/beta/ExponentialMovingAverage"
+  input: "conv1/weight_loss/avg"
   input: "save/RestoreV2_6"
   attr {
     key: "T"
@@ -45106,7 +47815,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/beta"
+        s: "loc:@conv1/weight_loss/avg"
       }
     }
   }
@@ -45115,9 +47824,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 64
-          }
         }
       }
     }
@@ -45166,7 +47872,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/conv2/moving_mean"
+        string_val: "conv2/conv2/beta"
       }
     }
   }
@@ -45235,7 +47941,7 @@ node {
 node {
   name: "save/Assign_7"
   op: "Assign"
-  input: "conv2/conv2/moving_mean"
+  input: "conv2/conv2/beta"
   input: "save/RestoreV2_7"
   attr {
     key: "T"
@@ -45247,7 +47953,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/moving_mean"
+        s: "loc:@conv2/conv2/beta"
       }
     }
   }
@@ -45307,7 +48013,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/conv2/moving_variance"
+        string_val: "conv2/conv2/beta/ExponentialMovingAverage"
       }
     }
   }
@@ -45376,7 +48082,7 @@ node {
 node {
   name: "save/Assign_8"
   op: "Assign"
-  input: "conv2/conv2/moving_variance"
+  input: "conv2/conv2/beta/ExponentialMovingAverage"
   input: "save/RestoreV2_8"
   attr {
     key: "T"
@@ -45388,7 +48094,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/conv2/moving_variance"
+        s: "loc:@conv2/conv2/beta"
       }
     }
   }
@@ -45448,7 +48154,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/weight_loss/avg"
+        string_val: "conv2/conv2/gamma"
       }
     }
   }
@@ -45517,7 +48223,7 @@ node {
 node {
   name: "save/Assign_9"
   op: "Assign"
-  input: "conv2/weight_loss/avg"
+  input: "conv2/conv2/gamma"
   input: "save/RestoreV2_9"
   attr {
     key: "T"
@@ -45529,7 +48235,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weight_loss/avg"
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -45538,6 +48244,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -45586,7 +48295,7 @@ node {
             size: 1
           }
         }
-        string_val: "cross_entropy/avg"
+        string_val: "conv2/conv2/gamma/ExponentialMovingAverage"
       }
     }
   }
@@ -45655,7 +48364,7 @@ node {
 node {
   name: "save/Assign_10"
   op: "Assign"
-  input: "cross_entropy/avg"
+  input: "conv2/conv2/gamma/ExponentialMovingAverage"
   input: "save/RestoreV2_10"
   attr {
     key: "T"
@@ -45667,7 +48376,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@cross_entropy/avg"
+        s: "loc:@conv2/conv2/gamma"
       }
     }
   }
@@ -45676,6 +48385,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -45724,7 +48436,7 @@ node {
             size: 1
           }
         }
-        string_val: "global_step"
+        string_val: "conv2/conv2/moving_mean"
       }
     }
   }
@@ -45785,7 +48497,7 @@ node {
     key: "dtypes"
     value {
       list {
-        type: DT_INT64
+        type: DT_FLOAT
       }
     }
   }
@@ -45793,19 +48505,19 @@ node {
 node {
   name: "save/Assign_11"
   op: "Assign"
-  input: "global_step"
+  input: "conv2/conv2/moving_mean"
   input: "save/RestoreV2_11"
   attr {
     key: "T"
     value {
-      type: DT_INT64
+      type: DT_FLOAT
     }
   }
   attr {
     key: "_class"
     value {
       list {
-        s: "loc:@global_step"
+        s: "loc:@conv2/conv2/moving_mean"
       }
     }
   }
@@ -45814,6 +48526,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -45862,7 +48577,7 @@ node {
             size: 1
           }
         }
-        string_val: "local3/weight_loss/avg"
+        string_val: "conv2/conv2/moving_variance"
       }
     }
   }
@@ -45931,7 +48646,7 @@ node {
 node {
   name: "save/Assign_12"
   op: "Assign"
-  input: "local3/weight_loss/avg"
+  input: "conv2/conv2/moving_variance"
   input: "save/RestoreV2_12"
   attr {
     key: "T"
@@ -45943,7 +48658,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weight_loss/avg"
+        s: "loc:@conv2/conv2/moving_variance"
       }
     }
   }
@@ -45952,6 +48667,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -46000,7 +48718,7 @@ node {
             size: 1
           }
         }
-        string_val: "local4/weight_loss/avg"
+        string_val: "conv2/weight_loss/avg"
       }
     }
   }
@@ -46069,7 +48787,7 @@ node {
 node {
   name: "save/Assign_13"
   op: "Assign"
-  input: "local4/weight_loss/avg"
+  input: "conv2/weight_loss/avg"
   input: "save/RestoreV2_13"
   attr {
     key: "T"
@@ -46081,7 +48799,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weight_loss/avg"
+        s: "loc:@conv2/weight_loss/avg"
       }
     }
   }
@@ -46138,7 +48856,7 @@ node {
             size: 1
           }
         }
-        string_val: "softmax_linear/weight_loss/avg"
+        string_val: "cross_entropy/avg"
       }
     }
   }
@@ -46207,7 +48925,7 @@ node {
 node {
   name: "save/Assign_14"
   op: "Assign"
-  input: "softmax_linear/weight_loss/avg"
+  input: "cross_entropy/avg"
   input: "save/RestoreV2_14"
   attr {
     key: "T"
@@ -46219,7 +48937,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/weight_loss/avg"
+        s: "loc:@cross_entropy/avg"
       }
     }
   }
@@ -46276,7 +48994,7 @@ node {
             size: 1
           }
         }
-        string_val: "total_loss/avg"
+        string_val: "global_step"
       }
     }
   }
@@ -46337,7 +49055,7 @@ node {
     key: "dtypes"
     value {
       list {
-        type: DT_FLOAT
+        type: DT_INT64
       }
     }
   }
@@ -46345,8 +49063,560 @@ node {
 node {
   name: "save/Assign_15"
   op: "Assign"
-  input: "total_loss/avg"
+  input: "global_step"
   input: "save/RestoreV2_15"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@global_step"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_16/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "local3/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_16/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_16"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_16/tensor_names"
+  input: "save/RestoreV2_16/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_16"
+  op: "Assign"
+  input: "local3/weight_loss/avg"
+  input: "save/RestoreV2_16"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@local3/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_17/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "local4/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_17/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_17"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_17/tensor_names"
+  input: "save/RestoreV2_17/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_17"
+  op: "Assign"
+  input: "local4/weight_loss/avg"
+  input: "save/RestoreV2_17"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@local4/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_18/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "softmax_linear/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_18/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_18"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_18/tensor_names"
+  input: "save/RestoreV2_18/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_18"
+  op: "Assign"
+  input: "softmax_linear/weight_loss/avg"
+  input: "save/RestoreV2_18"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_19/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "total_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_19/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_19"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_19/tensor_names"
+  input: "save/RestoreV2_19/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_19"
+  op: "Assign"
+  input: "total_loss/avg"
+  input: "save/RestoreV2_19"
   attr {
     key: "T"
     value {
@@ -46402,604 +49672,10 @@ node {
   input: "^save/Assign_13"
   input: "^save/Assign_14"
   input: "^save/Assign_15"
-}
-node {
-  name: "save/RestoreV2_16/tensor_names"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: "conv1/biases"
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_16/shape_and_slices"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: ""
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_16"
-  op: "RestoreV2"
-  input: "save/Const"
-  input: "save/RestoreV2_16/tensor_names"
-  input: "save/RestoreV2_16/shape_and_slices"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtypes"
-    value {
-      list {
-        type: DT_FLOAT
-      }
-    }
-  }
-}
-node {
-  name: "save/Assign_16"
-  op: "Assign"
-  input: "conv1/biases"
-  input: "save/RestoreV2_16"
-  device: "/device:CPU:0"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@conv1/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 64
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_17/tensor_names"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: "conv1/biases/ExponentialMovingAverage"
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_17/shape_and_slices"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: ""
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_17"
-  op: "RestoreV2"
-  input: "save/Const"
-  input: "save/RestoreV2_17/tensor_names"
-  input: "save/RestoreV2_17/shape_and_slices"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtypes"
-    value {
-      list {
-        type: DT_FLOAT
-      }
-    }
-  }
-}
-node {
-  name: "save/Assign_17"
-  op: "Assign"
-  input: "conv1/biases/ExponentialMovingAverage"
-  input: "save/RestoreV2_17"
-  device: "/device:CPU:0"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@conv1/biases"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 64
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_18/tensor_names"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: "conv1/weights"
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_18/shape_and_slices"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: ""
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_18"
-  op: "RestoreV2"
-  input: "save/Const"
-  input: "save/RestoreV2_18/tensor_names"
-  input: "save/RestoreV2_18/shape_and_slices"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtypes"
-    value {
-      list {
-        type: DT_FLOAT
-      }
-    }
-  }
-}
-node {
-  name: "save/Assign_18"
-  op: "Assign"
-  input: "conv1/weights"
-  input: "save/RestoreV2_18"
-  device: "/device:CPU:0"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@conv1/weights"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 5
-          }
-          dim {
-            size: 5
-          }
-          dim {
-            size: 3
-          }
-          dim {
-            size: 64
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_19/tensor_names"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: "conv1/weights/ExponentialMovingAverage"
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_19/shape_and_slices"
-  op: "Const"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_STRING
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_STRING
-        tensor_shape {
-          dim {
-            size: 1
-          }
-        }
-        string_val: ""
-      }
-    }
-  }
-}
-node {
-  name: "save/RestoreV2_19"
-  op: "RestoreV2"
-  input: "save/Const"
-  input: "save/RestoreV2_19/tensor_names"
-  input: "save/RestoreV2_19/shape_and_slices"
-  device: "/device:CPU:0"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          unknown_rank: true
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtypes"
-    value {
-      list {
-        type: DT_FLOAT
-      }
-    }
-  }
-}
-node {
-  name: "save/Assign_19"
-  op: "Assign"
-  input: "conv1/weights/ExponentialMovingAverage"
-  input: "save/RestoreV2_19"
-  device: "/device:CPU:0"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@conv1/weights"
-      }
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 5
-          }
-          dim {
-            size: 5
-          }
-          dim {
-            size: 3
-          }
-          dim {
-            size: 64
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
+  input: "^save/Assign_16"
+  input: "^save/Assign_17"
+  input: "^save/Assign_18"
+  input: "^save/Assign_19"
 }
 node {
   name: "save/RestoreV2_20/tensor_names"
@@ -47033,7 +49709,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/biases"
+        string_val: "conv1/biases"
       }
     }
   }
@@ -47104,7 +49780,7 @@ node {
 node {
   name: "save/Assign_20"
   op: "Assign"
-  input: "conv2/biases"
+  input: "conv1/biases"
   input: "save/RestoreV2_20"
   device: "/device:CPU:0"
   attr {
@@ -47117,7 +49793,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/biases"
+        s: "loc:@conv1/biases"
       }
     }
   }
@@ -47178,7 +49854,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/biases/ExponentialMovingAverage"
+        string_val: "conv1/biases/ExponentialMovingAverage"
       }
     }
   }
@@ -47249,7 +49925,7 @@ node {
 node {
   name: "save/Assign_21"
   op: "Assign"
-  input: "conv2/biases/ExponentialMovingAverage"
+  input: "conv1/biases/ExponentialMovingAverage"
   input: "save/RestoreV2_21"
   device: "/device:CPU:0"
   attr {
@@ -47262,7 +49938,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/biases"
+        s: "loc:@conv1/biases"
       }
     }
   }
@@ -47323,7 +49999,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/weights"
+        string_val: "conv1/weights"
       }
     }
   }
@@ -47394,7 +50070,7 @@ node {
 node {
   name: "save/Assign_22"
   op: "Assign"
-  input: "conv2/weights"
+  input: "conv1/weights"
   input: "save/RestoreV2_22"
   device: "/device:CPU:0"
   attr {
@@ -47407,7 +50083,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weights"
+        s: "loc:@conv1/weights"
       }
     }
   }
@@ -47423,7 +50099,7 @@ node {
             size: 5
           }
           dim {
-            size: 64
+            size: 3
           }
           dim {
             size: 64
@@ -47477,7 +50153,7 @@ node {
             size: 1
           }
         }
-        string_val: "conv2/weights/ExponentialMovingAverage"
+        string_val: "conv1/weights/ExponentialMovingAverage"
       }
     }
   }
@@ -47548,7 +50224,7 @@ node {
 node {
   name: "save/Assign_23"
   op: "Assign"
-  input: "conv2/weights/ExponentialMovingAverage"
+  input: "conv1/weights/ExponentialMovingAverage"
   input: "save/RestoreV2_23"
   device: "/device:CPU:0"
   attr {
@@ -47561,7 +50237,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@conv2/weights"
+        s: "loc:@conv1/weights"
       }
     }
   }
@@ -47577,7 +50253,7 @@ node {
             size: 5
           }
           dim {
-            size: 64
+            size: 3
           }
           dim {
             size: 64
@@ -47631,7 +50307,7 @@ node {
             size: 1
           }
         }
-        string_val: "local3/biases"
+        string_val: "conv2/biases"
       }
     }
   }
@@ -47702,7 +50378,7 @@ node {
 node {
   name: "save/Assign_24"
   op: "Assign"
-  input: "local3/biases"
+  input: "conv2/biases"
   input: "save/RestoreV2_24"
   device: "/device:CPU:0"
   attr {
@@ -47715,7 +50391,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/biases"
+        s: "loc:@conv2/biases"
       }
     }
   }
@@ -47725,7 +50401,7 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -47776,7 +50452,7 @@ node {
             size: 1
           }
         }
-        string_val: "local3/biases/ExponentialMovingAverage"
+        string_val: "conv2/biases/ExponentialMovingAverage"
       }
     }
   }
@@ -47847,7 +50523,7 @@ node {
 node {
   name: "save/Assign_25"
   op: "Assign"
-  input: "local3/biases/ExponentialMovingAverage"
+  input: "conv2/biases/ExponentialMovingAverage"
   input: "save/RestoreV2_25"
   device: "/device:CPU:0"
   attr {
@@ -47860,7 +50536,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/biases"
+        s: "loc:@conv2/biases"
       }
     }
   }
@@ -47870,7 +50546,7 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 64
           }
         }
       }
@@ -47921,7 +50597,7 @@ node {
             size: 1
           }
         }
-        string_val: "local3/weights"
+        string_val: "conv2/weights"
       }
     }
   }
@@ -47992,7 +50668,7 @@ node {
 node {
   name: "save/Assign_26"
   op: "Assign"
-  input: "local3/weights"
+  input: "conv2/weights"
   input: "save/RestoreV2_26"
   device: "/device:CPU:0"
   attr {
@@ -48005,7 +50681,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weights"
+        s: "loc:@conv2/weights"
       }
     }
   }
@@ -48015,10 +50691,16 @@ node {
       list {
         shape {
           dim {
-            size: 2304
+            size: 5
           }
           dim {
-            size: 384
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
           }
         }
       }
@@ -48069,7 +50751,7 @@ node {
             size: 1
           }
         }
-        string_val: "local3/weights/ExponentialMovingAverage"
+        string_val: "conv2/weights/ExponentialMovingAverage"
       }
     }
   }
@@ -48140,7 +50822,7 @@ node {
 node {
   name: "save/Assign_27"
   op: "Assign"
-  input: "local3/weights/ExponentialMovingAverage"
+  input: "conv2/weights/ExponentialMovingAverage"
   input: "save/RestoreV2_27"
   device: "/device:CPU:0"
   attr {
@@ -48153,7 +50835,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local3/weights"
+        s: "loc:@conv2/weights"
       }
     }
   }
@@ -48163,10 +50845,16 @@ node {
       list {
         shape {
           dim {
-            size: 2304
+            size: 5
           }
           dim {
-            size: 384
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
           }
         }
       }
@@ -48217,7 +50905,7 @@ node {
             size: 1
           }
         }
-        string_val: "local4/biases"
+        string_val: "local3/biases"
       }
     }
   }
@@ -48288,7 +50976,7 @@ node {
 node {
   name: "save/Assign_28"
   op: "Assign"
-  input: "local4/biases"
+  input: "local3/biases"
   input: "save/RestoreV2_28"
   device: "/device:CPU:0"
   attr {
@@ -48301,7 +50989,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/biases"
+        s: "loc:@local3/biases"
       }
     }
   }
@@ -48311,7 +50999,7 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -48362,7 +51050,7 @@ node {
             size: 1
           }
         }
-        string_val: "local4/biases/ExponentialMovingAverage"
+        string_val: "local3/biases/ExponentialMovingAverage"
       }
     }
   }
@@ -48433,7 +51121,7 @@ node {
 node {
   name: "save/Assign_29"
   op: "Assign"
-  input: "local4/biases/ExponentialMovingAverage"
+  input: "local3/biases/ExponentialMovingAverage"
   input: "save/RestoreV2_29"
   device: "/device:CPU:0"
   attr {
@@ -48446,7 +51134,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/biases"
+        s: "loc:@local3/biases"
       }
     }
   }
@@ -48456,7 +51144,7 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -48507,7 +51195,7 @@ node {
             size: 1
           }
         }
-        string_val: "local4/weights"
+        string_val: "local3/weights"
       }
     }
   }
@@ -48578,7 +51266,7 @@ node {
 node {
   name: "save/Assign_30"
   op: "Assign"
-  input: "local4/weights"
+  input: "local3/weights"
   input: "save/RestoreV2_30"
   device: "/device:CPU:0"
   attr {
@@ -48591,7 +51279,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weights"
+        s: "loc:@local3/weights"
       }
     }
   }
@@ -48601,10 +51289,10 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 2304
           }
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -48655,7 +51343,7 @@ node {
             size: 1
           }
         }
-        string_val: "local4/weights/ExponentialMovingAverage"
+        string_val: "local3/weights/ExponentialMovingAverage"
       }
     }
   }
@@ -48726,7 +51414,7 @@ node {
 node {
   name: "save/Assign_31"
   op: "Assign"
-  input: "local4/weights/ExponentialMovingAverage"
+  input: "local3/weights/ExponentialMovingAverage"
   input: "save/RestoreV2_31"
   device: "/device:CPU:0"
   attr {
@@ -48739,7 +51427,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@local4/weights"
+        s: "loc:@local3/weights"
       }
     }
   }
@@ -48749,10 +51437,10 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 2304
           }
           dim {
-            size: 192
+            size: 384
           }
         }
       }
@@ -48803,7 +51491,7 @@ node {
             size: 1
           }
         }
-        string_val: "softmax_linear/biases"
+        string_val: "local4/biases"
       }
     }
   }
@@ -48874,7 +51562,7 @@ node {
 node {
   name: "save/Assign_32"
   op: "Assign"
-  input: "softmax_linear/biases"
+  input: "local4/biases"
   input: "save/RestoreV2_32"
   device: "/device:CPU:0"
   attr {
@@ -48887,7 +51575,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/biases"
+        s: "loc:@local4/biases"
       }
     }
   }
@@ -48897,7 +51585,7 @@ node {
       list {
         shape {
           dim {
-            size: 10
+            size: 192
           }
         }
       }
@@ -48948,7 +51636,7 @@ node {
             size: 1
           }
         }
-        string_val: "softmax_linear/biases/ExponentialMovingAverage"
+        string_val: "local4/biases/ExponentialMovingAverage"
       }
     }
   }
@@ -49019,7 +51707,7 @@ node {
 node {
   name: "save/Assign_33"
   op: "Assign"
-  input: "softmax_linear/biases/ExponentialMovingAverage"
+  input: "local4/biases/ExponentialMovingAverage"
   input: "save/RestoreV2_33"
   device: "/device:CPU:0"
   attr {
@@ -49032,7 +51720,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/biases"
+        s: "loc:@local4/biases"
       }
     }
   }
@@ -49042,7 +51730,7 @@ node {
       list {
         shape {
           dim {
-            size: 10
+            size: 192
           }
         }
       }
@@ -49093,7 +51781,7 @@ node {
             size: 1
           }
         }
-        string_val: "softmax_linear/weights"
+        string_val: "local4/weights"
       }
     }
   }
@@ -49164,7 +51852,7 @@ node {
 node {
   name: "save/Assign_34"
   op: "Assign"
-  input: "softmax_linear/weights"
+  input: "local4/weights"
   input: "save/RestoreV2_34"
   device: "/device:CPU:0"
   attr {
@@ -49177,7 +51865,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@softmax_linear/weights"
+        s: "loc:@local4/weights"
       }
     }
   }
@@ -49187,10 +51875,10 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 384
           }
           dim {
-            size: 10
+            size: 192
           }
         }
       }
@@ -49241,7 +51929,7 @@ node {
             size: 1
           }
         }
-        string_val: "softmax_linear/weights/ExponentialMovingAverage"
+        string_val: "local4/weights/ExponentialMovingAverage"
       }
     }
   }
@@ -49312,8 +52000,594 @@ node {
 node {
   name: "save/Assign_35"
   op: "Assign"
-  input: "softmax_linear/weights/ExponentialMovingAverage"
+  input: "local4/weights/ExponentialMovingAverage"
   input: "save/RestoreV2_35"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@local4/weights"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_36/tensor_names"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "softmax_linear/biases"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_36/shape_and_slices"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_36"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_36/tensor_names"
+  input: "save/RestoreV2_36/shape_and_slices"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_36"
+  op: "Assign"
+  input: "softmax_linear/biases"
+  input: "save/RestoreV2_36"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/biases"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_37/tensor_names"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "softmax_linear/biases/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_37/shape_and_slices"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_37"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_37/tensor_names"
+  input: "save/RestoreV2_37/shape_and_slices"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_37"
+  op: "Assign"
+  input: "softmax_linear/biases/ExponentialMovingAverage"
+  input: "save/RestoreV2_37"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/biases"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_38/tensor_names"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "softmax_linear/weights"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_38/shape_and_slices"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_38"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_38/tensor_names"
+  input: "save/RestoreV2_38/shape_and_slices"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_38"
+  op: "Assign"
+  input: "softmax_linear/weights"
+  input: "save/RestoreV2_38"
+  device: "/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@softmax_linear/weights"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_39/tensor_names"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "softmax_linear/weights/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_39/shape_and_slices"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_39"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_39/tensor_names"
+  input: "save/RestoreV2_39/shape_and_slices"
+  device: "/device:CPU:0"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_39"
+  op: "Assign"
+  input: "softmax_linear/weights/ExponentialMovingAverage"
+  input: "save/RestoreV2_39"
   device: "/device:CPU:0"
   attr {
     key: "T"
@@ -49360,10 +52634,6 @@ node {
 node {
   name: "save/restore_shard_1"
   op: "NoOp"
-  input: "^save/Assign_16"
-  input: "^save/Assign_17"
-  input: "^save/Assign_18"
-  input: "^save/Assign_19"
   input: "^save/Assign_20"
   input: "^save/Assign_21"
   input: "^save/Assign_22"
@@ -49380,6 +52650,10 @@ node {
   input: "^save/Assign_33"
   input: "^save/Assign_34"
   input: "^save/Assign_35"
+  input: "^save/Assign_36"
+  input: "^save/Assign_37"
+  input: "^save/Assign_38"
+  input: "^save/Assign_39"
   device: "/device:CPU:0"
 }
 node {
