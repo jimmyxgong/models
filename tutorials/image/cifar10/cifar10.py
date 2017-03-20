@@ -207,9 +207,9 @@ def inference(images, phase):
                                          wd=0.0)
     conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
-    pre_activation = tf.nn.bias_add(conv, biases)
+    #pre_activation = tf.nn.bias_add(conv, biases)
     # preprocessing with batch normalization
-    #pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, center = True, scale = False, scope = scope.name, reuse = True)
+    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, center = True, scale = False, scope = scope.name, reuse = True)
     conv1 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv1)
 
@@ -228,8 +228,8 @@ def inference(images, phase):
                                          wd=0.0)
     conv = tf.nn.conv2d(norm1, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
-    pre_activation = tf.nn.bias_add(conv, biases)
-    #pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, center = True, scale = False, scope = scope.name, reuse = True)
+    #pre_activation = tf.nn.bias_add(conv, biases)
+    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, center = True, scale = False, scope = scope.name, reuse = True)
     conv2 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv2)
 
