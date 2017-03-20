@@ -63,7 +63,7 @@ NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = cifar10_input.NUM_EXAMPLES_PER_EPOCH_FOR_EVAL
 
 
 # Constants describing the training process.
-MOVING_AVERAGE_DECAY = 0.9999     # The decay to use for the moving average.
+MOVING_AVERAGE_DECAY = 0.999     # The decay to use for the moving average.
 NUM_EPOCHS_PER_DECAY = 350.0      # Epochs after which learning rate decays.
 LEARNING_RATE_DECAY_FACTOR = 0.1  # Learning rate decay factor.
 INITIAL_LEARNING_RATE = 0.1       # Initial learning rate.
@@ -207,9 +207,9 @@ def inference(images, phase):
                                          wd=0.0)
     conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
-    #pre_activation = tf.nn.bias_add(conv, biases)
+    pre_activation = tf.nn.bias_add(conv, biases)
     # preprocessing with batch normalization
-    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True, scope = scope.name, reuse = True)
+    #pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True, scope = scope.name, reuse = True)
     conv1 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv1)
 
@@ -228,8 +228,8 @@ def inference(images, phase):
                                          wd=0.0)
     conv = tf.nn.conv2d(norm1, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
-    #pre_activation = tf.nn.bias_add(conv, biases)
-    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True, scope = scope.name, reuse = True)
+    pre_activation = tf.nn.bias_add(conv, biases)
+    #pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True, scope = scope.name, reuse = True)
     conv2 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv2)
 
