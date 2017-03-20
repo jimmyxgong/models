@@ -343,10 +343,11 @@ def train(total_loss, global_step):
   decay_steps = int(num_batches_per_epoch * NUM_EPOCHS_PER_DECAY)
 
   # Decay the learning rate exponentially based on the number of steps.
+  # decay_steps, LEARNING_RATE_DECAY_FACTOR
   lr = tf.train.exponential_decay(INITIAL_LEARNING_RATE,
                                   global_step,
-                                  decay_steps,
-                                  LEARNING_RATE_DECAY_FACTOR,
+                                  4000,
+                                  0.96,
                                   staircase=True)
   tf.summary.scalar('learning_rate', lr)
 
