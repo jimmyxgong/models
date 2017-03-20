@@ -75,7 +75,8 @@ def tower_loss(scope):
   images, labels = cifar10.distorted_inputs()
 
   # Build inference Graph.
-  logits = cifar10.inference(images)
+  # Set True to let batch_normalization know that we're in training phase
+  logits = cifar10.inference(images, True)
 
   # Build the portion of the Graph calculating the losses. Note that we will
   # assemble the total_loss using a custom function below.

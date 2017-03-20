@@ -185,7 +185,7 @@ def inputs(eval_data):
   return images, labels
 
 
-def inference(images):
+def inference(images, phase):
   """Build the CIFAR-10 model.
 
   Args:
@@ -207,7 +207,12 @@ def inference(images):
                                          wd=0.0)
     conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
-    pre_activation = tf.nn.bias_add(conv, biases)
+    # pre_activation = tf.nn.bias_add(conv, biases)
+    # preprocessing with batch normalization
+    pre_activation = tf.contrib.layers.batch_norm(conv,
+                                                  is_training = phase,
+                                                  scope = scope,
+                                                  reuse = True)
     conv1 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv1)
 

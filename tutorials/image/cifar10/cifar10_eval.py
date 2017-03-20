@@ -122,7 +122,8 @@ def evaluate():
 
     # Build a Graph that computes the logits predictions from the
     # inference model.
-    logits = cifar10.inference(images)
+    # Set False to let batch_normalization know we're in testing phase
+    logits = cifar10.inference(images, False)
 
     # Calculate predictions.
     top_k_op = tf.nn.in_top_k(logits, labels, 1)
