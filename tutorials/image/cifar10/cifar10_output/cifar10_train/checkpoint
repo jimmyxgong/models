@@ -1,13 +1,6 @@
-model_checkpoint_path: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-100000"
-<<<<<<< HEAD
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-89556"
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-92778"
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-96001"
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-99224"
-=======
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-90456"
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-93486"
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-96514"
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-99544"
->>>>>>> 2af2b0e866aa676fd1c90a14baeb4c8337f34b4b
-all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-100000"
+model_checkpoint_path: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-10000"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-1"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-3052"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-6113"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-9171"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-10000"
