@@ -1,0 +1,6 @@
+model_checkpoint_path: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-100000"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-89556"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-92778"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-96001"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-99224"
+all_model_checkpoint_paths: "/home/ubuntu/src/cg181/models/tutorials/image/cifar10/cifar10_output/cifar10_train/model.ckpt-100000"
