@@ -208,8 +208,7 @@ def inference(images):
     conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
     pre_activation = tf.nn.bias_add(conv, biases)
-#    net = tf.nn.relu(pre_activation, name=scope.name)
-    net = tf.sigmoid(pre_activation, name=scope.name)
+    net = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(net)
 
   # pool1
@@ -228,8 +227,7 @@ def inference(images):
     conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
     pre_activation = tf.nn.bias_add(conv, biases)
-#    net = tf.nn.relu(pre_activation, name=scope.name)
-    net = tf.sigmoid(pre_activation, name=scope.name)
+    net = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(net)
 
 #  # norm2
@@ -239,17 +237,17 @@ def inference(images):
   net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1],
                          strides=[1, 2, 2, 1], padding='SAME', name='pool2')
 
-#  # local3
-#  with tf.variable_scope('local3') as scope:
-#    # Move everything into depth so we can perform a single matrix multiply.
-#    reshape = tf.reshape(net, [FLAGS.batch_size, -1])
-#    dim = reshape.get_shape()[1].value
-#    weights = _variable_with_weight_decay('weights', shape=[dim, 384],
-#                                          stddev=0.04, wd=0.004)
-#    biases = _variable_on_cpu('biases', [384], tf.constant_initializer(0.1))
-#    net = tf.nn.relu(tf.matmul(reshape, weights) + biases, name=scope.name)
-#    _activation_summary(net)
-#
+  # local3
+  with tf.variable_scope('local3') as scope:
+    # Move everything into depth so we can perform a single matrix multiply.
+    reshape = tf.reshape(net, [FLAGS.batch_size, -1])
+    dim = reshape.get_shape()[1].value
+    weights = _variable_with_weight_decay('weights', shape=[dim, 384],
+                                          stddev=0.04, wd=0.0)
+    biases = _variable_on_cpu('biases', [384], tf.constant_initializer(0.1))
+    net = tf.nn.relu(tf.matmul(reshape, weights) + biases, name=scope.name)
+    _activation_summary(net)
+
 #  # local4
 #  with tf.variable_scope('local4') as scope:
 #    weights = _variable_with_weight_decay('weights', shape=[384, 192],
@@ -264,8 +262,8 @@ def inference(images):
   # and performs the softmax internally for efficiency.
   with tf.variable_scope('softmax_linear') as scope:
 
-    net = tf.reshape(net, [FLAGS.batch_size, -1])
-    dim = net.get_shape()[1].value
+    #net = tf.reshape(net, [FLAGS.batch_size, -1])
+    dim = 384 #net.get_shape()[1].value
     weights = _variable_with_weight_decay('weights', [dim, NUM_CLASSES],
                                           stddev=1/dim, wd=0.0)
 
