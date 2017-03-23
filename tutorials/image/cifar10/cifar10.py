@@ -209,7 +209,7 @@ def inference(images, phase):
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
     #pre_activation = tf.nn.bias_add(conv, biases)
     # preprocessing with batch normalization
-    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True, scope = scope.name, reuse = True)
+    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True)
     conv1 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv1)
 
@@ -229,7 +229,7 @@ def inference(images, phase):
     conv = tf.nn.conv2d(norm1, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
     #pre_activation = tf.nn.bias_add(conv, biases)
-    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True, scope = scope.name, reuse = True)
+    pre_activation = tf.contrib.layers.batch_norm(conv,is_training = phase, decay = 0.9, center = True, scale = True)
     conv2 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv2)
 
@@ -348,8 +348,8 @@ def train(total_loss, global_step):
   # 2500, 0.90
   lr = tf.train.exponential_decay(INITIAL_LEARNING_RATE,
                                   global_step,
-                                  2500,
-                                  0.90,
+                                  decay_steps,
+                                  LEARNING_RATE_DECAY_FACTOR,
                                   staircase=True)
   tf.summary.scalar('learning_rate', lr)
 
