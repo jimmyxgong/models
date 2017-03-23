@@ -304,6 +304,7 @@ def inference(images, phase):
     weights = _variable_with_weight_decay('weights', shape=[dim, 384],
                                           stddev=0.04, wd=0.004)
     biases = _variable_on_cpu('biases', [384], tf.constant_initializer(0.1))
+    #print('========= dim AND reshape  ============: {} : {}'.format(dim, reshape.shape))
     local3 = tf.nn.relu(tf.matmul(reshape, weights) + biases, name=scope.name)
     _activation_summary(local3)
 
@@ -317,9 +318,10 @@ def inference(images, phase):
 
  # local5
   with tf.variable_scope('local5') as scope:
-    weights = _variable_with_weight_decay('weights', shape=[384, 192],
+    weights = _variable_with_weight_decay('weights', shape=[192, 86],
                                           stddev=0.04, wd=0.004)
-    biases = _variable_on_cpu('biases', [192], tf.constant_initializer(0.1))
+    biases = _variable_on_cpu('biases', [86], tf.constant_initializer(0.1))
+    #print('========= local 4 ============: {}'.format(local4.shape))
     local5 = tf.nn.relu(tf.matmul(local4, weights) + biases, name=scope.name)
     _activation_summary(local5)
 
@@ -336,8 +338,8 @@ def inference(images, phase):
     #weights = _variable_with_weight_decay('weights', [dim, NUM_CLASSES],
     #                                      stddev=1/dim, wd=0.0)
 
-    weights = _variable_with_weight_decay('weights', [192, NUM_CLASSES],
-                                          stddev=1/192.0, wd=0.0)
+    weights = _variable_with_weight_decay('weights', [86, NUM_CLASSES],
+                                          stddev=1/86.0, wd=0.0)
     biases = _variable_on_cpu('biases', [NUM_CLASSES],
                               tf.constant_initializer(0.0))
     softmax_linear = tf.add(tf.matmul(local5, weights), biases, name=scope.name)
