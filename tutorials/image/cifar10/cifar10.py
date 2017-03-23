@@ -208,7 +208,8 @@ def inference(images):
     conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
     pre_activation = tf.nn.bias_add(conv, biases)
-    net = tf.nn.relu(pre_activation, name=scope.name)
+#    net = tf.nn.relu(pre_activation, name=scope.name)
+    net = tf.sigmoid(pre_activation, name=scope.name)
     _activation_summary(net)
 
   # pool1
@@ -227,7 +228,8 @@ def inference(images):
     conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
     pre_activation = tf.nn.bias_add(conv, biases)
-    net = tf.nn.relu(pre_activation, name=scope.name)
+#    net = tf.nn.relu(pre_activation, name=scope.name)
+    net = tf.sigmoid(pre_activation, name=scope.name)
     _activation_summary(net)
 
 #  # norm2
@@ -360,8 +362,7 @@ def train(total_loss, global_step):
 
   # Compute gradients.
   with tf.control_dependencies([loss_averages_op]):
-#    opt = tf.train.GradientDescentOptimizer(lr)
-    opt = tf.train.AdamOptimizer(lr, 0.9)
+    opt = tf.train.GradientDescentOptimizer(lr)
     grads = opt.compute_gradients(total_loss)
 
   # Apply gradients.
