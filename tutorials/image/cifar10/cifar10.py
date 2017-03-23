@@ -212,7 +212,7 @@ def inference(images):
     _activation_summary(net)
 
   # pool1
-  net = tf.nn.avg_pool(net, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
+  net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
                          padding='SAME', name='pool1')
 #  # norm1
 #  net = tf.nn.lrn(net, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
@@ -234,7 +234,7 @@ def inference(images):
 #  net = tf.nn.lrn(net, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
 #                    name='norm2')
   # pool2
-  net = tf.nn.avg_pool(net, ksize=[1, 3, 3, 1],
+  net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1],
                          strides=[1, 2, 2, 1], padding='SAME', name='pool2')
 
 #  # local3
@@ -360,7 +360,8 @@ def train(total_loss, global_step):
 
   # Compute gradients.
   with tf.control_dependencies([loss_averages_op]):
-    opt = tf.train.GradientDescentOptimizer(lr)
+#    opt = tf.train.GradientDescentOptimizer(lr)
+    opt = tf.train.MomentumOptimizer(lr, 0.9)
     grads = opt.compute_gradients(total_loss)
 
   # Apply gradients.
