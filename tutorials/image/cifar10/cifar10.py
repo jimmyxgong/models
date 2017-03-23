@@ -361,7 +361,7 @@ def train(total_loss, global_step):
   # Compute gradients.
   with tf.control_dependencies([loss_averages_op]):
 #    opt = tf.train.GradientDescentOptimizer(lr)
-    opt = tf.train.MomentumOptimizer(lr, 0.9)
+    opt = tf.train.AdamOptimizer(lr, 0.9)
     grads = opt.compute_gradients(total_loss)
 
   # Apply gradients.
