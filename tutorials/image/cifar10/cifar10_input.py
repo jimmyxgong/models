@@ -123,8 +123,7 @@ def _generate_image_and_label_batch(image, label, min_queue_examples,
         batch_size=batch_size,
         num_threads=num_preprocess_threads,
         capacity=min_queue_examples + 3 * batch_size,
-        min_after_dequeue=min_queue_examples,
-	seed = 999)
+        min_after_dequeue=min_queue_examples)
   else:
     images, label_batch = tf.train.batch(
         [image, label],
