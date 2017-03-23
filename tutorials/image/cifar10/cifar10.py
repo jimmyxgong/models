@@ -202,7 +202,7 @@ def inference(images):
   # conv1
   with tf.variable_scope('conv1') as scope:
     kernel = _variable_with_weight_decay('weights',
-                                         shape=[3, 3, 3, 64],
+                                         shape=[5, 5, 3, 64],
                                          stddev=5e-2,
                                          wd=0.0)
     conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
@@ -210,10 +210,21 @@ def inference(images):
     pre_activation = tf.nn.bias_add(conv, biases)
     net = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(net)
+  
+  # dropout
+  net = tf.nn.dropout(net, .75)
 
+  # pool1
+  net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
+                         padding='SAME', name='pool1')
+#  # norm1
+#  net = tf.nn.lrn(net, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
+#                    name='norm1')
+
+  # conv2
   with tf.variable_scope('conv2') as scope:
     kernel = _variable_with_weight_decay('weights',
-                                         shape=[3, 3, 64, 64],
+                                         shape=[5, 5, 64, 64],
                                          stddev=5e-2,
                                          wd=0.0)
     conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
@@ -221,68 +232,17 @@ def inference(images):
     pre_activation = tf.nn.bias_add(conv, biases)
     net = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(net)
+  
+  # dropout
+  net = tf.nn.dropout(net, .75)
 
+
+#  # norm2
+#  net = tf.nn.lrn(net, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
+#                    name='norm2')
+  # pool2
   net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1],
-                         strides=[1, 2, 2, 1], padding='SAME', name=('pool1'))
-
-  with tf.variable_scope('conv3') as scope:
-    kernel = _variable_with_weight_decay('weights',
-                                         shape=[3, 3, 64, 128],
-                                         stddev=5e-2,
-                                         wd=0.0)
-    conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
-    biases = _variable_on_cpu('biases', [128], tf.constant_initializer(0.1))
-    pre_activation = tf.nn.bias_add(conv, biases)
-    net = tf.nn.relu(pre_activation, name=scope.name)
-    _activation_summary(net)
-
-  with tf.variable_scope('conv4') as scope:
-    kernel = _variable_with_weight_decay('weights',
-                                         shape=[3, 3, 128, 128],
-                                         stddev=5e-2,
-                                         wd=0.0)
-    conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
-    biases = _variable_on_cpu('biases', [128], tf.constant_initializer(0.1))
-    pre_activation = tf.nn.bias_add(conv, biases)
-    net = tf.nn.relu(pre_activation, name=scope.name)
-    _activation_summary(net)
-
-  with tf.variable_scope('conv5') as scope:
-    kernel = _variable_with_weight_decay('weights',
-                                         shape=[3, 3, 128, 128],
-                                         stddev=5e-2,
-                                         wd=0.0)
-    conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
-    biases = _variable_on_cpu('biases', [128], tf.constant_initializer(0.1))
-    pre_activation = tf.nn.bias_add(conv, biases)
-    net = tf.nn.relu(pre_activation, name=scope.name)
-    _activation_summary(net)
-
-  net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1],
-                         strides=[1, 2, 2, 1], padding='SAME', name=('pool2'))
-
-
-
-
-
-#  # conv2
-#  with tf.variable_scope('conv2') as scope:
-#    kernel = _variable_with_weight_decay('weights',
-#                                         shape=[5, 5, 64, 64],
-#                                         stddev=5e-2,
-#                                         wd=0.0)
-#    conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
-#    biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
-#    pre_activation = tf.nn.bias_add(conv, biases)
-#    net = tf.nn.relu(pre_activation, name=scope.name)
-#    _activation_summary(net)
-#
-##  # norm2
-##  net = tf.nn.lrn(net, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
-##                    name='norm2')
-#  # pool2
-#  net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1],
-#                         strides=[1, 2, 2, 1], padding='SAME', name='pool2')
+                         strides=[1, 2, 2, 1], padding='SAME', name='pool2')
 
 #  # local3
 #  with tf.variable_scope('local3') as scope:
