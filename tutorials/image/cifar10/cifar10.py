@@ -218,24 +218,7 @@ def inference(images, phase):
   norm1 = tf.nn.lrn(pool1, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
                     name='norm1')
 
- # for l in range(2,6):
- #   with tf.variable_scope('conv'+str(l)) as scope:
- #     kernel = _variable_with_weight_decay('weights',
- #                                          shape=[5, 5, 64, 64],
- #                                          stddev=5e-2,
- #                                          wd=0.0)
- #     conv = tf.nn.conv2d(net, kernel, [1, 1, 1, 1], padding='SAME')
- #     biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
- #     pre_activation = tf.nn.bias_add(conv, biases)
- #     net = tf.nn.relu(pre_activation, name=scope.name)
- #     _activation_summary(net)
- #
- #   net = tf.nn.max_pool(net, ksize=[1, 3, 3, 1],
- #                        strides=[1, 2, 2, 1], padding='SAME', name=('pool'+str(l)))
- #   net = tf.nn.lrn(net, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
- #                   name=('norm'+str(l)))
-
-  # conv2
+   # conv2
   with tf.variable_scope('conv2') as scope:
     kernel = _variable_with_weight_decay('weights',
                                          shape=[5, 5, 64, 64],
@@ -306,6 +289,7 @@ def inference(images, phase):
     biases = _variable_on_cpu('biases', [384], tf.constant_initializer(0.1))
     #print('========= dim AND reshape  ============: {} : {}'.format(dim, reshape.shape))
     local3 = tf.nn.relu(tf.matmul(reshape, weights) + biases, name=scope.name)
+    #local3 = tf.nn.dropout(local3, keep_prob=0.5)
     _activation_summary(local3)
 
   # local4
@@ -314,6 +298,7 @@ def inference(images, phase):
                                           stddev=0.04, wd=0.004)
     biases = _variable_on_cpu('biases', [192], tf.constant_initializer(0.1))
     local4 = tf.nn.relu(tf.matmul(local3, weights) + biases, name=scope.name)
+    #local4 = tf.nn.dropout(local4, keep_prob=0.5)
     _activation_summary(local4)
 
  # local5
@@ -321,7 +306,6 @@ def inference(images, phase):
     weights = _variable_with_weight_decay('weights', shape=[192, 86],
                                           stddev=0.04, wd=0.004)
     biases = _variable_on_cpu('biases', [86], tf.constant_initializer(0.1))
-    #print('========= local 4 ============: {}'.format(local4.shape))
     local5 = tf.nn.relu(tf.matmul(local4, weights) + biases, name=scope.name)
     _activation_summary(local5)
 
@@ -418,10 +402,11 @@ def train(total_loss, global_step):
 
   # Decay the learning rate exponentially based on the number of steps.
   # decay_steps, LEARNING_RATE_DECAY_FACTOR
+  # 4000, 0.75
   lr = tf.train.exponential_decay(INITIAL_LEARNING_RATE,
                                   global_step,
-                                  decay_steps,
-                                  LEARNING_RATE_DECAY_FACTOR,
+                                  4000,
+                                  0.75,
                                   staircase=True)
   tf.summary.scalar('learning_rate', lr)
 
