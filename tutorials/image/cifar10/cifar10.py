@@ -221,11 +221,11 @@ def inference(images, phase):
    # conv2
   with tf.variable_scope('conv2') as scope:
     kernel = _variable_with_weight_decay('weights',
-                                         shape=[5, 5, 64, 64],
+                                         shape=[5, 5, 64, 128],
                                          stddev=5e-2,
                                          wd=0.0)
     conv = tf.nn.conv2d(norm1, kernel, [1, 1, 1, 1], padding='SAME')
-    biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
+    biases = _variable_on_cpu('biases', [128], tf.constant_initializer(0.1))
     pre_activation = tf.nn.bias_add(conv, biases)
     conv2 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv2)
@@ -239,11 +239,11 @@ def inference(images, phase):
   # conv3
   with tf.variable_scope('conv3') as scope:
     kernel = _variable_with_weight_decay('weights',
-                                         shape=[5, 5, 64, 64],
+                                         shape=[5, 5, 128, 128],
                                          stddev=5e-2,
                                          wd=0.0)
     conv = tf.nn.conv2d(pool2, kernel, [1, 1, 1, 1], padding='SAME')
-    biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
+    biases = _variable_on_cpu('biases', [128], tf.constant_initializer(0.1))
     pre_activation = tf.nn.bias_add(conv, biases)
     conv3 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv3)
@@ -251,11 +251,11 @@ def inference(images, phase):
   # conv4
   with tf.variable_scope('conv4') as scope:
     kernel = _variable_with_weight_decay('weights',
-                                         shape=[5, 5, 64, 64],
+                                         shape=[5, 5, 128, 128],
                                          stddev=5e-2,
                                          wd=0.0)
     conv = tf.nn.conv2d(conv3, kernel, [1, 1, 1, 1], padding='SAME')
-    biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
+    biases = _variable_on_cpu('biases', [128], tf.constant_initializer(0.1))
     pre_activation = tf.nn.bias_add(conv, biases)
     conv4 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv4)
@@ -263,11 +263,11 @@ def inference(images, phase):
   # conv5
   with tf.variable_scope('conv5') as scope:
     kernel = _variable_with_weight_decay('weights',
-                                         shape=[5, 5, 64, 64],
+                                         shape=[5, 5, 128, 128],
                                          stddev=5e-2,
                                          wd=0.0)
     conv = tf.nn.conv2d(conv4, kernel, [1, 1, 1, 1], padding='SAME')
-    biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.1))
+    biases = _variable_on_cpu('biases', [128], tf.constant_initializer(0.1))
     pre_activation = tf.nn.bias_add(conv, biases)
     conv5 = tf.nn.relu(pre_activation, name=scope.name)
     _activation_summary(conv5)
@@ -405,8 +405,8 @@ def train(total_loss, global_step):
   # 4000, 0.75
   lr = tf.train.exponential_decay(INITIAL_LEARNING_RATE,
                                   global_step,
-                                  4000,
-                                  0.75,
+                                  decay_steps,
+                                  LEARNING_RATE_DECAY_FACTOR,
                                   staircase=True)
   tf.summary.scalar('learning_rate', lr)
 
